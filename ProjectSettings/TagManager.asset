@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Bomb
+  - FixedWall
+  - SoftWall
+  - BombBuff
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Wall
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1015224309
+    locked: 0
+  - name: BackMid
+    uniqueID: 3012618589
+    locked: 0
+  - name: Middle
+    uniqueID: 2945176829
+    locked: 0
+  - name: MiddleFront
+    uniqueID: 4090849847
+    locked: 0
+  - name: Front
+    uniqueID: 2972265819
+    locked: 0
+  - name: VFX
+    uniqueID: 3368202975
+    locked: 0
+  - name: OverTop
+    uniqueID: 80702897
+    locked: 0
