@@ -7,8 +7,8 @@ namespace BomberGame
 
     public struct Tags
     {
-        public const string FixedWall = "FixedWall";
-        public const string SoftWall = "SoftWall";
+        public const string Wall = "Wall";
+        public const string StaticWall = "StaticWall";
         public const string Charachter = "Player";
         public const string Bomb = "Bomb";
         public const string BombBuff = "BombBuff";

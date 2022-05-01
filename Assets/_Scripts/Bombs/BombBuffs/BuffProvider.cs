@@ -18,7 +18,7 @@ namespace BomberGame {
         public virtual void Store(IInventory inventory)
         {
             Debug.Log($"stored new buff {_myBuff.ID}");
-            inventory.StoreItem(_myBuff.ID,1);
+            inventory.AddItem(_myBuff.ID,1);
             if(_collider != null)
                 _collider.enabled = false;
             

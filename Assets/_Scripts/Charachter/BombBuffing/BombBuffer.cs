@@ -9,7 +9,7 @@ namespace BomberGame
     public class BombBuffer : MonoBehaviour, IBombBuffer
     {
         [SerializeField] private InventorySourceBase _inventorySource;
-        [SerializeField] private BombBuffByID _buffsList;
+        [SerializeField] private BombBuffers _buffsList;
         private InventoryBase _buffsInventory;
         private void Start()
         {

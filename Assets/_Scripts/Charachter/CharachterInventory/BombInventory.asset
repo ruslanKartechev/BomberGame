@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentID: b01
   DefaultItemID: b01
-  StartBombsCount: 100
+  _bombMenuChannel: {fileID: 11400000, guid: 039703f0103472a4ca2f1aa42e21ab95, type: 2}
+  StartBombsCount: 10

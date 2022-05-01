@@ -9,11 +9,12 @@ namespace BomberGame
 
         [SerializeField] protected string _dropID;
         [SerializeField] protected int _dropCount;
+        [SerializeField] protected BombSpriteByID _sprites;
         [Space(5)]
         [SerializeField] Collider2D _collider;
         [SerializeField] protected Animator _anim;
         [SerializeField] protected SpriteRenderer _rend;
-        [SerializeField] protected BombSpriteByID _sprites;
+        [Space(5)]
         [Header("Hidden")]
         [SerializeField] protected Sprite _hiddenSprite;
         [SerializeField] protected Vector3 _hiddenScale;
@@ -40,18 +41,18 @@ namespace BomberGame
         {
             _rend.color = _droppedColor;
             _rend.sprite = _sprites.SpriteByID.Find(t => t.ID == _dropID).Sprite;
-            _rend.gameObject.transform.localScale = _droppedScale;
+            transform.localScale = _droppedScale;
         }
         public void SetHiddenView()
         {
-            _rend.gameObject.transform.localScale = _hiddenScale;
+            transform.localScale = _hiddenScale;
             _rend.color = _hiddenColor;
             _rend.sprite = _hiddenSprite;
         }
 
         public void Store(IInventory inventory)
         {
-            inventory.StoreItem(_dropID, _dropCount);
+            inventory.AddItem(_dropID, _dropCount);
             Destroy(gameObject);
         }
 

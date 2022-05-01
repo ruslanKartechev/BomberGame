@@ -1,20 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 namespace BomberGame
 {
     public class PlayerInventoryManager : MonoBehaviour
     {
         [SerializeField] private InventorySourceBase _inventorySource;
+
         private InventoryBase _bombInventory;
         private InventoryBase _buffInventory;
+
+
         private void Start()
         {
             _bombInventory = _inventorySource.GetBombsInventory();
             _buffInventory = _inventorySource.GetBombBuffsInventory();
         }
 
+        public void GetBomb(string id, int count)
+        {
+            _bombInventory.AddItem(id, count);
+        }
+
+        public void GetBuff(string id, int count)
+        {
+            _buffInventory.AddItem(id, count);
+        }
+
+        public void SetCurrentBomb(string id)
+        {
+            _bombInventory.SetCurrentItem(id);
+
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -26,7 +41,7 @@ namespace BomberGame
                     {
                         storable.Store(_bombInventory);
                         string id = storable.GetID();
-                        _bombInventory.CurrentID = id;
+                        _bombInventory.SetCurrentItem(id);
                     }
                     break;
                 case Tags.BombBuff:
@@ -36,11 +51,13 @@ namespace BomberGame
                     break;
             }
         }
+
         public void ClearInventory()
         {
             _buffInventory?.ClearInventory();
             _bombInventory?.ClearInventory();
         }
+        
         private void OnDestroy()
         {
             ClearInventory();

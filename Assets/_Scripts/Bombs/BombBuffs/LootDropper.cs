@@ -10,6 +10,8 @@ namespace BomberGame
         [SerializeField] protected GameObject _droppable;
         private void Awake()
         {
+            if (_droppable == null)
+                return;
             if (_wall == null)
                 _wall = GetComponent<DestroyableWall>();
             if(_wall != null)
@@ -20,6 +22,8 @@ namespace BomberGame
 
         protected void DropBuff()
         {
+            if (_droppable == null)
+                return;
             IDroppable droppable = _droppable.GetComponent<IDroppable>();
             droppable?.Drop();
         }

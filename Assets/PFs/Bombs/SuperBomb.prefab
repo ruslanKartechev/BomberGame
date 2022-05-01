@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2285312094971659741}
   - component: {fileID: 6928008457026991794}
   - component: {fileID: 2534536161278581310}
-  - component: {fileID: 2755696173236515944}
+  - component: {fileID: 8784609825908441502}
   m_Layer: 0
   m_Name: SuperBomb
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2285312094971659739}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.11, y: 2, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 2285312096845956904}
   m_Father: {fileID: 0}
@@ -66,7 +66,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2755696173236515944
+--- !u!114 &8784609825908441502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2285312094971659739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421ffea4b691b8d4fbaa26656dea8837, type: 3}
+  m_Script: {fileID: 11500000, guid: efebb65399cdbbc45aa7fb7ffbc52499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: e7241492314e00b4f84c0a40e0625753, type: 2}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_SortingLayerID: -926764321
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1c6b22a71a89c5840b4cbf34b5a7e1f4, type: 3}
-  m_Color: {r: 0.6415094, g: 0, b: 0.54758847, a: 1}
+  m_Sprite: {fileID: 21300000, guid: ce74ed679817e8e42bc6424aef1d4c12, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

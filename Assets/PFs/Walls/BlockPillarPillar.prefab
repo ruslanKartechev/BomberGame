@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8861328065238492753}
   m_Layer: 6
   m_Name: BlockPillarPillar
-  m_TagString: FixedWall
+  m_TagString: StaticWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

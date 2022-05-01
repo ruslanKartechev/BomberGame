@@ -71,9 +71,26 @@ namespace BomberGame
                 _raycaster.Raycast(transform.position, dir);
                 if (_raycaster._lastHit == false)
                 {
-                    Vector3 moveVector = _settings.GridDistance * dir;
-                    StartCoroutine(Snapping(_settings.GetTime(), moveVector));
+                    Move();
                 }
+                else
+                {
+                    IWall wall = _raycaster.GetComponent<IWall>();
+                    if(wall != null)
+                    {
+                        switch (wall.GetType())
+                        {
+                            case WallType.Movable:
+                                Debug.Log("movable");
+                                break;
+                        }
+                    }
+                }
+            }
+            void Move()
+            {
+                Vector3 moveVector = _settings.GridDistance * dir;
+                StartCoroutine(Snapping(_settings.GetTime(), moveVector));
             }
         }
 

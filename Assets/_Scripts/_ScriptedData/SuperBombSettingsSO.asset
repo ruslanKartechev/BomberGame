@@ -26,5 +26,5 @@ MonoBehaviour:
   - {x: -1, y: 0, z: 0}
   - {x: 0, y: 1, z: 0}
   - {x: 0, y: -1, z: 0}
-  PiercingDepth: 1
+  PiercingDepth: 10
   UsePiercingDepth: 0

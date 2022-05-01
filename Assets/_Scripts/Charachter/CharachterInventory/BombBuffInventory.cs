@@ -21,13 +21,18 @@ namespace BomberGame
             return CurrentID;   
         }
 
-        public override void StoreItem(string id, int count)
+        public override void AddItem(string id, int count)
         {
             ItemCount.Add(id,count);
         }
         public override void ClearInventory()
         {
             ItemCount.Clear();
+        }
+
+        public override void SetCurrentItem(string id)
+        {
+           
         }
     }
 }
