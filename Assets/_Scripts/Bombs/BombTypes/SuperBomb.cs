@@ -91,7 +91,6 @@ namespace BomberGame
                     switch (wall.GetType())
                     {
                         case WallType.Soft:
-                            SoftWallEffect(hit.GO);
                             lastDistance = hit.Distance;
                             pierced += 1;
                             break;
@@ -116,16 +115,5 @@ namespace BomberGame
         }
         #endregion
 
-        #region EffectsOnTargets
-
-        protected virtual void SoftWallEffect(GameObject go)
-        {
-            go.GetComponent<IDestroyable>()?.DestroyGO();
-        }
-        protected virtual void CharachterEffect(GameObject go)
-        {
-            Debug.Log("hit charachter");
-        }
-        #endregion
     }
 }

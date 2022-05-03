@@ -99,7 +99,8 @@ namespace BomberGame
         {
             Debug.Log("Healing charachter");
             IHealable h = go.GetComponent<IHealable>();
-            h.Heal(1);
+            if(h != null)
+                h.Heal(1);
         }
 
     }

@@ -7,7 +7,7 @@ namespace BomberGame
     {
         public RaycastHit2D _lastHit;
         [Space(10)]
-        public float Distance;
+        [HideInInspector] public float Distance;
         [Space(10)]
         public float AdditionalDistance;
         public float CircleCastRadius;
@@ -21,9 +21,14 @@ namespace BomberGame
 
         public void Raycast(Vector3 origin, Vector3 dir)
         {
-            //Raycast(Vector2 origin, Vector2 direction, float distance, int layerMask);
-            
             _lastHit = Physics2D.CircleCast(origin, CircleCastRadius, dir, Distance+ AdditionalDistance, Mask);
+        }
+        public List<RaycastHit2D> RaycastAll(Vector3 origin, Vector3 dir)
+        {
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(origin, CircleCastRadius, dir, Distance + AdditionalDistance, Mask);
+            List<RaycastHit2D> hitList = new List<RaycastHit2D>(hits.Length);
+            hitList.AddRange(hits);
+            return hitList;
         }
 
     }

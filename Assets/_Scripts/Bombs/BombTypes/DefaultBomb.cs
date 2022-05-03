@@ -91,16 +91,19 @@ namespace BomberGame
                     IDamagable d = hit.GO.GetComponent<IDamagable>();
                     if (d != null)
                         d.TakeDamage(1);
-
+                    
                     IWall wall = hit.GO.GetComponent<IWall>();
                     if (wall == null)
                         continue;
                     switch (wall.GetType())
                     {
                         case WallType.Soft:
-                            SoftWallEffect(hit.GO);
                             lastDistance = hit.Distance;
                             pierced += 1;
+                            break;
+                        default:
+                            lastDistance = hit.Distance;
+                            pierced = _piercing;
                             break;
                     }
                 }
@@ -127,15 +130,13 @@ namespace BomberGame
 
         protected virtual void SoftWallEffect(GameObject go)
         {
-            go.GetComponent<IDestroyable>()?.DestroyGO();
+            go.GetComponent<IDamagable>()?.TakeDamage(1);
         }
         protected virtual void CharachterEffect(GameObject go)
         {
             //Debug.Log("hit charachter");
         }
         #endregion
-
- 
 
         #region Buffs
 

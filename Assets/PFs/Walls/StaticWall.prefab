@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8861328065238492750}
   - component: {fileID: 8861328065238492753}
   m_Layer: 6
-  m_Name: BlockPillarPillar
+  m_Name: StaticWall
   m_TagString: StaticWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -1349790467
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 03242341d7ee75a4185024274d0b819d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f14ffb02c96b41543865cc2a8bb02159, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

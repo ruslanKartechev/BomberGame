@@ -5,7 +5,7 @@ namespace BomberGame
 {
     public class Wall : MonoBehaviour, IWall
     {
-        [SerializeField] private WallType _type;
+        [SerializeField] protected WallType _type;
 
         WallType IWall.GetType()
         {

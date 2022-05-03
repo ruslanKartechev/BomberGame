@@ -67,7 +67,8 @@ namespace BomberGame
         {
             if(_isMoving == false)
             {
-                _raycaster.Distance = _settings.GridDistance;
+                float distance = _settings.GridDistance;
+                _raycaster.Distance = distance;
                 _raycaster.Raycast(transform.position, dir);
                 if (_raycaster._lastHit == false)
                 {
@@ -75,18 +76,25 @@ namespace BomberGame
                 }
                 else
                 {
-                    IWall wall = _raycaster.GetComponent<IWall>();
+                    IWall wall = _raycaster._lastHit.collider.gameObject.GetComponent<IWall>();
                     if(wall != null)
                     {
                         switch (wall.GetType())
                         {
                             case WallType.Movable:
-                                Debug.Log("movable");
+                                IMovableWall m = _raycaster._lastHit.collider.gameObject.GetComponent<IMovableWall>();
+                                bool canMove = m.Move(dir, distance, _settings.SnapTime);
+                                if(canMove == true)
+                                {
+                                    Move();
+                                }
                                 break;
                         }
                     }
                 }
             }
+
+
             void Move()
             {
                 Vector3 moveVector = _settings.GridDistance * dir;
