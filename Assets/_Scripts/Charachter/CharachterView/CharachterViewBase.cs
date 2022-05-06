@@ -6,6 +6,7 @@ namespace BomberGame
 {
     public abstract class CharachterViewBase : MonoBehaviour
     {
+        public SpriteViewSO Sprites;
         public abstract void Enable();
         public abstract void Disable();
     }

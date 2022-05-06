@@ -6,10 +6,8 @@ namespace BomberGame
 {
     public class ChrachterSpriteView : CharachterViewBase
     {
-
         [SerializeField] private bool IsDebug = false;
         [SerializeField] protected InputMoveChannelSO _inputEvents;
-        [SerializeField] protected SpriteViewSO _sprites;
         [SerializeField] SpriteRenderer _renderer;
         private void Start()
         {
@@ -35,21 +33,21 @@ namespace BomberGame
         }
         private void OnUp()
         {
-            _renderer.sprite = _sprites.Up;
+            _renderer.sprite = Sprites.Up;
         }
         private void OnDown()
         {
-            _renderer.sprite = _sprites.Down;
+            _renderer.sprite = Sprites.Down;
 
         }
         private void OnLeft()
         {
-            _renderer.sprite = _sprites.Left;
+            _renderer.sprite = Sprites.Left;
 
         }
         private void OnRight()
         {
-            _renderer.sprite = _sprites.Right;
+            _renderer.sprite = Sprites.Right;
 
         }
     }

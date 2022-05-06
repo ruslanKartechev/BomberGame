@@ -8,6 +8,7 @@ namespace BomberGame
     {
         public abstract InventoryBase GetBombsInventory();
         public abstract InventoryBase GetBombBuffsInventory();
-        
+
+
     }
 }

@@ -8,6 +8,13 @@ namespace BomberGame
     public class BuffSpriteByID : ScriptableObject
     {
         public List<SpriteByID> BuffSprites = new List<SpriteByID>();
-
+        public Sprite GetSprite(string id)
+        {
+            Sprite s = BuffSprites.Find(t => t.ID == id).Sprite;
+            if (s == null)
+                Debug.Log($"Sprite not found {id} ");
+            return s;
+            
+        }
     }
 }

@@ -4,54 +4,57 @@ namespace BomberGame
 {
     public class PlayerBombPlacer : BombPlacerBase
     {
-        [SerializeField] private InventorySourceBase _inventorySource;
-        [Space(5)]
-        [SerializeField] private BombsPrefabs _bombPrefabs;
-        [Space(5)]
-        [SerializeField] private InputAttackChannelSO _attackChannel;
-        [Space(5)]
         [SerializeField] private CharachterBombPositioner _positioner;
         [Space(5)]
         [SerializeField] private BombColorer _colorer;
+        private IBuffer _bombBuffer;
         [Space(10)]
         [SerializeField] private bool SelfInit = false;
+        private CharachterInventory _inventory;
 
-        private InventoryBase _bombInventory; 
-        private IBombBuffer _buffer;
+        private void Awake()
+        {
+            _bombBuffer = GetComponent<IBuffer>();
+            if (_bombBuffer == null)
+                Debug.Log("Bomb buffer not found");
+            _inventory = GetComponent<CharachterInventory>();
+        }
+
         private void Start()
         {
-            _bombInventory = _inventorySource.GetBombsInventory();
-            _bombInventory.Init();
             if (SelfInit == true)
                 Enable();
-
-            _buffer = GetComponent<IBombBuffer>();
-            if (_buffer == null)
-                Debug.Log("Bomb buffer not found");
         }
 
         public override void Disable()
         {
-            _attackChannel.Attack -= PlaceBomb;
+            AttackChannel.Attack -= PlaceBomb;
         }
 
         public override void Enable()
         {
-            _attackChannel.Attack += PlaceBomb;
+            AttackChannel.Attack += PlaceBomb;
         }
 
-        public override void PlaceBomb()
+        public void PlaceBomb()
         {
-            string id = _bombInventory.GetCurrentItem();
-            GameObject b =  _bombPrefabs.GetPrefab(id);
-            b = Instantiate(b);
-            _colorer?.ColorBomb(b);
-          
+            string id = _inventory.GetBomb();
+            if (id != "empty")
+            {
+                GameObject b = _bombPrefabs.GetPrefab(id);
+                b = Instantiate(b);
+                _colorer?.ColorBomb(b);
 
-            BombBase bomb = b.GetComponent<BombBase>();
-            PlaceBomb(bomb);
-            bomb.InitCoundown();
-            _buffer?.BuffBomb(b);
+                BombBase bomb = b.GetComponent<BombBase>();
+                PlaceBomb(bomb);
+                bomb.InitCoundown();
+                _bombBuffer?.BuffBomb(b, _inventory.GetBombBuffs());
+
+            }
+            else
+            {
+                Debug.Log("returned empty");
+            }
         }
 
         private void PlaceBomb(IPlaceable target)

@@ -7,6 +7,7 @@ namespace BomberGame.UI
 {
     public class BombUIBlock : MonoBehaviour
     {
+        [HideInInspector] public string ID;
         public Image BombImage;
         public TextMeshProUGUI Text;
         public Image HighlightImage;

@@ -9,11 +9,9 @@ namespace BomberGame.UI
     public class BombMenuUI : MonoBehaviour
     {
         [SerializeField] private List<BombUIBlock> _blocks = new List<BombUIBlock>();
-        private List<int> _displayed = new List<int>();
+        private List<string> _displayed = new List<string>();
         private Dictionary<int, Vector2> _postions = new Dictionary<int, Vector2>();
-        private int appendInd = 0;
-        private int shownCount = 0;
-        private int highLightInd = 0;
+        private BombUIBlock _active;
         public void Init()
         {
             for(int i=0; i< _blocks.Count; i++)
@@ -21,79 +19,83 @@ namespace BomberGame.UI
                 _postions.Add(i,_blocks[i].transform.localPosition);
                 _blocks[i].Hide();
             }
-            appendInd = 0;
-            shownCount = 0;
-
-
         }
 
-        public int SetBlock(Sprite sprite, string text)
+        public void SetBlock(Sprite sprite, string text, string id)
         {
-            //Debug.Log($"append index: {appendInd}");
             BombUIBlock b = _blocks.Find(t => t.IsShown == false);
             if (b == null)
                 b = _blocks[_blocks.Count - 1];
-            int blockind = _blocks.IndexOf(b);
-            _displayed.Insert(0, blockind);
+
+            b.ID = id;
+            _displayed.Insert(0, id);
 
             b.gameObject.SetActive(true);
             b.Show();
             b.SetImage(sprite);
             b.SetText(text);
-            //b.SetLocalPosition(_postions[appendInd]);
-
-            //b.OrderPos = appendInd;
-            //if (appendInd < _blocks.Count-1)
-            //    appendInd++;
-            //if(shownCount < _blocks.Count)
-            //    shownCount++;
             Reorder();
-            return blockind;
         }
 
-        public void HideBlock(int index)
+        public void HideBlock(string id)
         {
-            int order = _blocks[index].OrderPos;
-            //if(shownCount < _blocks.Count)
-            //    appendInd--;
-            //shownCount--;
-            _blocks[index].Hide();
-            _blocks[index].StopHighlihgt();
-            _displayed.Remove(index);
-            foreach(BombUIBlock b in _blocks)
+            BombUIBlock b = _blocks.Find(t => t.ID == id);
+            int order = b.OrderPos;
+            b.Hide();
+            b.StopHighlihgt();
+            _displayed.Remove(id);
+            foreach(BombUIBlock block in _blocks)
             {
-                if(b.OrderPos > order)
+                if(block.OrderPos > order)
                 {
-                    b.OrderPos--;
+                    block.OrderPos--;
                 }
             }
-            _blocks[index].OrderPos = _blocks.Count-1;
+            b.OrderPos = _blocks.Count-1;
             Reorder();
         }
 
-        public void UpdateText(int index, string text)
+        public void UpdateText(string id, string text)
         {
-            _blocks[index].SetText(text);
+            if(_active.ID == id)
+            {
+                _active.SetText(text);
+            }
+            else
+            {
+                BombUIBlock b = _blocks.Find(t => t.ID == id);
+                if (b)
+                {
+                    b.SetText(text);
+                }
+            }
         }
         
         private void Reorder()
         {
             for(int i=0; i < _displayed.Count; i++)
             {
-                _blocks[_displayed[i]].SetLocalPosition(_postions[i]);
+               // _blocks[_displayed[i]].SetLocalPosition(_postions[i]);
             }
         }
 
-        public void Highlight(int index)
+        public void Highlight(string id)
         {
-            _blocks[highLightInd].StopHighlihgt();
-            _blocks[index].Highlight();
-            highLightInd = index;
+            StopHightlight();
+            BombUIBlock b = _blocks.Find(t => t.ID == id);
+            if (b)
+            {
+                _active = b;
+                b.Highlight();
+            }
         }
 
-        public void StopHightlight(int index)
+        public void StopHightlight()
         {
-            _blocks[index].StopHighlihgt();
+            if (_active)
+            {
+                _active.StopHighlihgt();
+            }
         }
 
     }

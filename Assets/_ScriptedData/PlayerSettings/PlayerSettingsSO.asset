@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095045f163d6c394383a23a9dad44433, type: 3}
+  m_Name: PlayerSettingsSO
+  m_EditorClassIdentifier: 
+  GridSnapTime: 0.1
+  StartHealth: 2
+  BombInventory: {fileID: 11400000, guid: 0f402c9ea2d36444d82aecbd396dd103, type: 2}
+  BuffInventory: {fileID: 11400000, guid: 62734aec5606aa949a626adddfe11b21, type: 2}
+  Sprites: {fileID: 11400000, guid: db9c01ef5c5efd240b046978673b3b33, type: 2}
+  BombPrefabs: {fileID: 11400000, guid: 7b63fcd5df1033a469bb57342f72b46f, type: 2}
+  BombBuffers: {fileID: 11400000, guid: b4abfb99d1e5b094b879858940e9b7a0, type: 2}
+  AttackChannel: {fileID: 11400000, guid: ed5b0689f76b49844a7c70a3a441faf3, type: 2}
+  MoveChannel: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
+  HealthUIChannel: {fileID: 11400000, guid: d8a8bbe6162a80640bffa4e8800660cb, type: 2}

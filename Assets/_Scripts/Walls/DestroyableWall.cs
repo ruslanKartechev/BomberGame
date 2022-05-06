@@ -3,13 +3,11 @@ using UnityEngine;
 namespace BomberGame
 {
 
-    public class DestroyableWall : MonoBehaviour, IDamagable
+    public class DestroyableWall : Wall, IDamagable
     {
-        [SerializeField] private Rigidbody2D _rb;
-        [SerializeField] private float _flySpeed;
-        [SerializeField] private float _flyTime;
-        public event Notifier OnDestroyed;
+        [SerializeField] private Collider2D _collider;
 
+        public event Notifier OnDestroyed;
         public void TakeDamage(int damage)
         {
             OnDestroyed?.Invoke();
@@ -18,12 +16,15 @@ namespace BomberGame
 
         protected virtual IEnumerator Destroying()
         {
-            _rb.constraints = RigidbodyConstraints2D.None;
-            transform.localScale *= 0.5f;
-            _rb.simulated = true;
-            _rb.velocity = UnityEngine.Random.insideUnitCircle * _flySpeed;
-            yield return new WaitForSeconds(_flyTime);
-       
+            _collider.enabled = false;
+            float elapsed = 0f;
+            float time = 0.17f;
+            while(elapsed <= time)
+            {
+                transform.localScale = Mathf.Lerp(1.2f, 0f, elapsed / time) * Vector3.one;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
             Destroy(gameObject);
         }
     }

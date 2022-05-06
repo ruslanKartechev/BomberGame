@@ -7,7 +7,7 @@ namespace BomberGame
 
     public interface IInventory
     {
-        void AddItem(string id,int count);
+        bool AddItem(string id,int count);
     }
 
     public abstract class InventoryBase : ScriptableObject, IInventory
@@ -16,10 +16,11 @@ namespace BomberGame
         public string CurrentID;
         public string DefaultItemID;
         public abstract void Init();
-        public abstract string GetCurrentItem();
-        public abstract void SetCurrentItem(string id);
-        public abstract void AddItem(string id, int count);
-        public abstract void RemoveItem(string id);
+        public abstract string GetCurrentItemID();
+        public abstract void SetCurrentItemID(string id);
+        public abstract bool TakeItem(string id, int count);
+        public abstract bool AddItem(string id, int count);
+        public abstract void ClearItem(string id);
         public abstract void ClearInventory();
 
     }

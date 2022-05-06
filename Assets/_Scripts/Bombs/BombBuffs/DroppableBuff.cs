@@ -10,6 +10,8 @@ namespace BomberGame
     }
     public class DroppableBuff : BuffProvider, IDroppable
     {
+        [SerializeField] private bool StartDropped;
+        [Space(10)]
         [SerializeField] protected Animator _anim;
         [SerializeField] protected SpriteRenderer _rend;
         [SerializeField] protected BuffSpriteByID _sprites;
@@ -25,6 +27,8 @@ namespace BomberGame
             _rend.color = HiddenColor;
             _anim.Play(HiddenAnimName);
             _collider.enabled = false;
+            if (StartDropped)
+                Drop();
         }
         public void Drop()
         {

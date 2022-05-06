@@ -6,9 +6,9 @@ namespace BomberGame
 {
     public abstract class CharachterMoverBase : MonoBehaviour
     {
-        [SerializeField] protected InputMoveChannelSO _inputEvents;
+        public InputMoveChannelSO InputMoveChannel;
 
-        public abstract void Init(object settings);
+        public abstract void Init(float moveSpeed);
         public abstract void EnableMovement();
         public abstract void DisableMovement();
     }

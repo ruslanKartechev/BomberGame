@@ -13,6 +13,7 @@ namespace BomberGame
             ILengthBuffable lb = target.GetComponent<ILengthBuffable>();
             if(lb != null)
                 lb.BuffLength(NewExplosionLength);
+            Debug.Log("applying new explosion length: " + NewExplosionLength);
         }
     }
 }

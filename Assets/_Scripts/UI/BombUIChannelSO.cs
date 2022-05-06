@@ -10,14 +10,11 @@ namespace BomberGame.UI
     {
         public Action ShowMenu;
         public Action HideMenu;
+        public Action UpdateView;
+        public Action<BombInventory> SetInventory;
+        public Action<string> SetCurrent;
 
-        public Action<string, int> AddItem;
-        public Action<string, int> UpdateCount;
-
-        public Action<string> RemoveItem;
-        public Action<string> SetCurrentItem;
-
-        public void InvokeShow()
+        public void RaiseShow()
         {
             if(ShowMenu != null)
             {
@@ -29,7 +26,8 @@ namespace BomberGame.UI
                 return;
             }
         }
-        public void InvokeHide()
+
+        public void RaiseHide()
         {
             if (HideMenu != null)
             {
@@ -41,53 +39,34 @@ namespace BomberGame.UI
                 return;
             }
         }
-        public void InvokeAddItem(string id, int count)
+
+        public void RaiseUpdateView()
         {
-            if (AddItem != null)
+            if (UpdateView != null)
             {
-                AddItem?.Invoke(id,count);
+                UpdateView?.Invoke();
             }
             else
             {
-                Debug.Log("AddItem aciton not assined");
+                Debug.Log("UpdateView aciton not assined");
                 return;
             }
+        }
+        
+        public void RaiseSetInventory(BombInventory inventory)
+        {
+            if (SetInventory != null)
+                SetInventory.Invoke(inventory);
+            else
+                Debug.Log("SetInventory action not assigned");
         }
 
-        public void InvokeUpdateItem(string id, int count)
+        public void RaiseSetCurrent(string id)
         {
-            if (UpdateCount != null)
-            {
-                UpdateCount?.Invoke(id, count);
-            }
+            if (SetCurrent != null)
+                SetCurrent.Invoke(id);
             else
-            {
-                Debug.Log("AddItem aciton not assined");
-                return;
-            }
-        }
-        public void InvokeRemoveItem(string id)
-        {
-            if (RemoveItem != null)
-            {
-                RemoveItem?.Invoke(id);
-            }
-            else
-            {
-                Debug.Log("AddItem aciton not assined");
-                return;
-            }
-        }
-        public void InvokeSetCurrent(string id)
-        {
-            if(SetCurrentItem != null)
-            {
-                SetCurrentItem?.Invoke(id);
-            }
-            else
-            {
-                Debug.Log($"SetCurrentItem action not assigned");
-            }
+                Debug.Log("SetCurrent not set");
         }
 
     }

@@ -157,6 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2016422096662645873}
+  - component: {fileID: 6410029608486759579}
   - component: {fileID: 2016422096662645870}
   - component: {fileID: 1609177010}
   - component: {fileID: 4138618834948920652}
@@ -164,6 +165,8 @@ GameObject:
   - component: {fileID: 7166731283210534147}
   - component: {fileID: 4158129441052449608}
   - component: {fileID: 2016422096662645871}
+  - component: {fileID: 453341579491589716}
+  - component: {fileID: 2053461769852609314}
   - component: {fileID: 1609177008}
   - component: {fileID: 7666136658635700328}
   m_Layer: 0
@@ -190,6 +193,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6410029608486759579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016422096662645872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de07c619a4cd94e4aadd680266592867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 57d05c5108eeec04ba765422a7f65d32, type: 2}
+  SelfInit: 1
+  _mover: {fileID: 2016422096662645870}
+  _health: {fileID: 453341579491589716}
+  _view: {fileID: 2016422097805735880}
+  _inventory: {fileID: 1609177010}
+  _bombPlacer: {fileID: 4138618834948920652}
+  _buffer: {fileID: 0}
 --- !u!114 &2016422096662645870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +225,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f053b681e9d3774e91947bea2ea3e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputEvents: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
-  _selfInit: 1
-  _settings: {fileID: 11400000, guid: 6e8f9eb1e94410649a3d241b7c740c64, type: 2}
-  _raycaster: {fileID: 2016422096662645871}
+  InputMoveChannel: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
+  _selfInit: 0
+  DebugStartSpeed: 0.15
+  _positionCheck:
+    _raycaster: {fileID: 2016422096662645871}
+    _charachter: {fileID: 2016422096662645873}
+  _gridSize: 1
 --- !u!114 &1609177010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,8 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b834a8ac9d71c04cb2b3b9bcea0bec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultBombID: b01
-  _inventorySource: {fileID: 7166731283210534147}
+  _bombMenuChannel: {fileID: 11400000, guid: 039703f0103472a4ca2f1aa42e21ab95, type: 2}
+  _buffMenuChannel: {fileID: 11400000, guid: c7092fb47cbf6014d9b4631962e188a0, type: 2}
 --- !u!114 &4138618834948920652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,16 +258,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0a68c46485e3245a457c9159b39af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySource: {fileID: 7166731283210534147}
+  AttackChannel: {fileID: 11400000, guid: ed5b0689f76b49844a7c70a3a441faf3, type: 2}
   _bombPrefabs: {fileID: 11400000, guid: 7b63fcd5df1033a469bb57342f72b46f, type: 2}
-  _attackChannel: {fileID: 11400000, guid: ed5b0689f76b49844a7c70a3a441faf3, type: 2}
   _positioner:
     _tileMover: {fileID: 2016422096662645870}
   _colorer:
     _bombColor:
       serializedVersion: 2
       rgba: 4282515675
-  SelfInit: 1
+  SelfInit: 0
 --- !u!114 &324991248874992326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,8 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f019b1bfc751434dac94f70eafeda3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySource: {fileID: 7166731283210534147}
-  _buffsList: {fileID: 11400000, guid: b4abfb99d1e5b094b879858940e9b7a0, type: 2}
+  _Buffs: {fileID: 11400000, guid: b4abfb99d1e5b094b879858940e9b7a0, type: 2}
 --- !u!114 &7166731283210534147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bombInventory: {fileID: 11400000, guid: 0f402c9ea2d36444d82aecbd396dd103, type: 2}
   _bombBufferInventory: {fileID: 11400000, guid: 62734aec5606aa949a626adddfe11b21, type: 2}
+  InitInventory: 0
+  _playerInventory: {fileID: 1609177010}
 --- !u!114 &4158129441052449608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +330,37 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &453341579491589716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016422096662645872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c26a4e39a160a4186a5dd6626980db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelfInit: 0
+  _channel: {fileID: 11400000, guid: d8a8bbe6162a80640bffa4e8800660cb, type: 2}
+  DebugStartHealth: 2
+  _effect: {fileID: 2053461769852609314}
+--- !u!114 &2053461769852609314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016422096662645872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235ffa817c4147a40b63843146e8f0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlickColor: {r: 1, g: 1, b: 1, a: 0}
+  Duration: 0.25
+  Rend: {fileID: 2016422097805735883}
 --- !u!58 &1609177008
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -352,7 +409,7 @@ GameObject:
   - component: {fileID: 2016422097005114759}
   - component: {fileID: 2016422097005114756}
   m_Layer: 0
-  m_Name: PlayerLight
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,12 +444,12 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.769
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2.46
+  m_FalloffIntensity: 0.737
+  m_Color: {r: 1, g: 0, b: 0.9632826, a: 1}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 5b2d29b15de990b3fdd48bafdfb2c2c8
+  m_ApplyToSortingLayers: dfb2c2c8376ad5f3f517833cfdd48baf5de990b3
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -439,7 +496,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 3.65
+  m_PointLightOuterRadius: 2.29
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -462,7 +519,7 @@ GameObject:
   - component: {fileID: 2016422097805735883}
   - component: {fileID: 2016422097805735880}
   m_Layer: 0
-  m_Name: PlayerView
+  m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -546,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3620012931cb843b9f2e4c8a1e5bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sprites: {fileID: 11400000, guid: db9c01ef5c5efd240b046978673b3b33, type: 2}
   IsDebug: 1
   _inputEvents: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
-  _sprites: {fileID: 11400000, guid: db9c01ef5c5efd240b046978673b3b33, type: 2}
   _renderer: {fileID: 2016422097805735883}

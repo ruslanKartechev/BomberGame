@@ -11,6 +11,8 @@ namespace BomberGame
         public int StartExplosionLength = 10;
         public float CountdownTime = 1f;
         [Space(10)]
+        public int Damage = 1;
+        [Space(10)]
         public int ExplosionCount = 1;
         public float ExplosionsDelay = 0.1f;
         [Space(10)]

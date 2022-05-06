@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: TileMoverSettings
   m_EditorClassIdentifier: 
   GridDistance: 1
-  SnapTime: 0.1
-  Speed: 1
+  MoveTime: 0.08

@@ -7,99 +7,96 @@ namespace BomberGame
     [CreateAssetMenu(fileName = "BombInventory", menuName = "SO/BombInventory", order = 1)]
     public class BombInventory : InventoryBase
     {
-        [SerializeField] private BombUIChannelSO _bombMenuChannel;
-        private List<string> storedOrder = new List<string>();
+        private List<string> _storedOrder = new List<string>();
+        public List<string> ItemsInOrder { get { return _storedOrder; } }
         public int StartBombsCount;
 
         public override void Init()
         {
+            _storedOrder.Clear();
             AddItem(DefaultItemID, StartBombsCount);
-            SetCurrentItem(DefaultItemID);
+            SetCurrentItemID(DefaultItemID);
         }
 
-        public override string GetCurrentItem()
+        public override string GetCurrentItemID()
         {
+            string retInd = CurrentID;
             if (ItemCount.ContainsKey(CurrentID) == false)
             {
                 CurrentID = DefaultItemID;
-                _bombMenuChannel?.InvokeSetCurrent(CurrentID);
             }
             if (ItemCount[CurrentID] > 0)
             {
-                ItemCount[CurrentID]--;
-                string retInd = CurrentID;
-                if (ItemCount[CurrentID] <= 0)
-                {
-                    _bombMenuChannel.InvokeRemoveItem(CurrentID);
-                    storedOrder.Remove(CurrentID);
-                    CurrentID = GetNextIndex();
-                    _bombMenuChannel?.InvokeSetCurrent(CurrentID);
-
-                }
-                _bombMenuChannel?.InvokeUpdateItem(CurrentID, ItemCount[CurrentID]);
-                return retInd;
+                return CurrentID;
             }
-            else
+
+            return DefaultItemID;
+        }
+
+        public override bool TakeItem(string id, int count)
+        {
+            if (ItemCount.ContainsKey(id))
             {
-                _bombMenuChannel.InvokeRemoveItem(CurrentID);
-                storedOrder.Remove(CurrentID);
+                if(ItemCount[id] - count >= 0)
+                {
+                    ItemCount[id] -= count;
+                    if (ItemCount[id] <= 0)
+                    {
+                        _storedOrder.Remove(CurrentID);
+                        CurrentID = GetNextIndex();
+                    }
+                    return true;
+                }
+                else
+                {
+                    Debug.Log($"Cannot return {count} items");
+                    return false;
+                }
 
-                CurrentID = GetNextIndex();
-                _bombMenuChannel?.InvokeSetCurrent(CurrentID);
-                _bombMenuChannel?.InvokeUpdateItem(CurrentID, ItemCount[CurrentID]);
             }
-            return CurrentID;
+            return false;
         }
 
         private string GetNextIndex()
         {
-            if(storedOrder.Count > 0)
+            if(_storedOrder.Count > 0)
             {
-                CurrentID = storedOrder[0];
+                CurrentID = _storedOrder[0];
             }
             else
                 CurrentID = DefaultItemID;
             return CurrentID;
         }
 
-        public override void RemoveItem(string id)
+        public override void ClearItem(string id)
         {
             ItemCount.Remove(id);
-            _bombMenuChannel?.InvokeRemoveItem(id);
         }
 
-        public override void AddItem(string id, int count)
+        public override bool AddItem(string id, int count)
         {
-            Debug.Log($"Storred new bomb {id}, count: {count}");
             if(ItemCount.ContainsKey(id) == false)
             {
                 ItemCount.Add(id, count);
-                storedOrder.Insert(0,id);
-                _bombMenuChannel?.InvokeAddItem(id, count);
+                _storedOrder.Insert(0,id);
             }
             else
             {
                 ItemCount[id] += count;
-                storedOrder.Insert(0, id);
-                _bombMenuChannel?.InvokeUpdateItem(id, ItemCount[id]);
+                _storedOrder.Insert(0, id);
             }
-    
+            return true;
         }
 
         public override void ClearInventory()
         {
-            foreach(string id in ItemCount.Keys)
-            {
-                _bombMenuChannel?.InvokeRemoveItem(id);
-            }
             ItemCount.Clear();
-
+            _storedOrder.Clear();
         }
 
-        public override void SetCurrentItem(string id)
+        public override void SetCurrentItemID(string id)
         {
             CurrentID = id;
-            _bombMenuChannel?.InvokeSetCurrent(CurrentID);
         }
     }
 }

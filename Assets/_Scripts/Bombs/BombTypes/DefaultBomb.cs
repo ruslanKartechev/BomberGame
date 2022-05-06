@@ -56,7 +56,9 @@ namespace BomberGame
         protected virtual float CastSide(Vector3 dir)
         {
             float distance = _settings.GridSize * _explosionLength;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position,_settings.CircleCastRad, dir, distance, _settings.CastMask);
+            float rad = _settings.CircleCastRad;
+            
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, rad, dir, distance, _settings.CastMask);
             if (hits.Length == 0)
                 return distance;
             List<RaycastResult> result = new List<RaycastResult>(hits.Length);
@@ -77,20 +79,22 @@ namespace BomberGame
             }
             else
                 SwitchResultNoPiercing(result, distance);
-            return distance;
+            return distance + rad;
         }
 
         protected virtual float SwitchResultPiercing(List<RaycastResult> result, float distance)
         {
             int pierced = 0;
             float lastDistance = distance;
+            float rad = _settings.CircleCastRad;
+
             foreach (RaycastResult hit in result)
             {
                 if (pierced < _piercing)
                 {
                     IDamagable d = hit.GO.GetComponent<IDamagable>();
                     if (d != null)
-                        d.TakeDamage(1);
+                        d.TakeDamage(_settings.Damage);
                     
                     IWall wall = hit.GO.GetComponent<IWall>();
                     if (wall == null)
@@ -126,20 +130,9 @@ namespace BomberGame
         }
         #endregion
 
-        #region EffectsOnTargets
 
-        protected virtual void SoftWallEffect(GameObject go)
-        {
-            go.GetComponent<IDamagable>()?.TakeDamage(1);
-        }
-        protected virtual void CharachterEffect(GameObject go)
-        {
-            //Debug.Log("hit charachter");
-        }
-        #endregion
 
         #region Buffs
-
         public virtual void BuffLength(float length)
         {
             _explosionLength = length;

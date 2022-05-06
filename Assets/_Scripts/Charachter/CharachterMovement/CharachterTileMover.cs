@@ -7,40 +7,44 @@ namespace BomberGame
     public class CharachterTileMover : CharachterMoverBase
     {
         [SerializeField] private bool _selfInit = true;
+        [SerializeField] private float DebugStartSpeed = 0.15f;
         [Space(10)]
-        [SerializeField] private TileMoverSettings _settings;
-        [SerializeField] private SingleCircleCaster _raycaster;
+        [SerializeField] private PositionChecker _positionCheck;
         public Vector3 PrevTilePosition { get; private set; }
+
         private bool _isMoving = false;
+        [SerializeField]  private float _gridSize = 1;
+        private float _moveTime;
         private void Start()
         {
             if (_selfInit)
             {
-                Init(null);
+                Init(DebugStartSpeed);
                 EnableMovement();
             }
             PrevTilePosition = transform.position;
+            _positionCheck._charachter = transform;
         }
 
-        public override void Init(object settings)
+        public override void Init(float moveSpeed)
         {
-
+            _moveTime = moveSpeed;
         }
 
         public override void EnableMovement()
         {
-            _inputEvents.Up += MoveUp;
-            _inputEvents.Down += MoveDown;
-            _inputEvents.Right += MoveRight;
-            _inputEvents.Left += MoveLeft;
+            InputMoveChannel.Up += MoveUp;
+            InputMoveChannel.Down += MoveDown;
+            InputMoveChannel.Right += MoveRight;
+            InputMoveChannel.Left += MoveLeft;
         }
 
         public override void DisableMovement()
         {
-            _inputEvents.Up -= MoveUp;
-            _inputEvents.Down -= MoveDown;
-            _inputEvents.Right -= MoveRight;
-            _inputEvents.Left -= MoveLeft;
+            InputMoveChannel.Up -= MoveUp;
+            InputMoveChannel.Down -= MoveDown;
+            InputMoveChannel.Right -= MoveRight;
+            InputMoveChannel.Left -= MoveLeft;
         }
 
 
@@ -67,42 +71,16 @@ namespace BomberGame
         {
             if(_isMoving == false)
             {
-                float distance = _settings.GridDistance;
-                _raycaster.Distance = distance;
-                _raycaster.Raycast(transform.position, dir);
-                if (_raycaster._lastHit == false)
+                CasterResult res = _positionCheck.CheckPositionPush(dir, _gridSize, _moveTime);
+                if (res.Allow)
                 {
-                    Move();
+                    Vector3 moveVector = _gridSize * dir;
+                    StartCoroutine(Snapping(_moveTime, moveVector));
                 }
-                else
-                {
-                    IWall wall = _raycaster._lastHit.collider.gameObject.GetComponent<IWall>();
-                    if(wall != null)
-                    {
-                        switch (wall.GetType())
-                        {
-                            case WallType.Movable:
-                                IMovableWall m = _raycaster._lastHit.collider.gameObject.GetComponent<IMovableWall>();
-                                bool canMove = m.Move(dir, distance, _settings.SnapTime);
-                                if(canMove == true)
-                                {
-                                    Move();
-                                }
-                                break;
-                        }
-                    }
-                }
-            }
-
-
-            void Move()
-            {
-                Vector3 moveVector = _settings.GridDistance * dir;
-                StartCoroutine(Snapping(_settings.GetTime(), moveVector));
             }
         }
 
-        private IEnumerator Snapping(float time, Vector3 moveVector, Action onEnd = null)
+        private IEnumerator Snapping(float time, Vector3 moveVector)
         {
             _isMoving = true;
             float elapsed = 0f;
@@ -118,7 +96,6 @@ namespace BomberGame
             transform.position = end;
             PrevTilePosition = end;
             _isMoving = false;
-            onEnd?.Invoke();
         }
 
     }

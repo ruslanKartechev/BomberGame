@@ -9,8 +9,9 @@ namespace BomberGame.UI
         [SerializeField] private BombMenuUI _ui;
         [Space(5)]
         [SerializeField] private BombUIChannelSO _menuChannel;
-        private Dictionary<string, int> _itemsCount = new Dictionary<string, int>();
-        private Dictionary<string, int> _elementID = new Dictionary<string, int>();
+        [SerializeField] private BombInventory _inventory;
+        private List<string> _shownItems = new List<string>();
+        private string _highlighted;
 
         private void Awake()
         {
@@ -19,17 +20,20 @@ namespace BomberGame.UI
             {
                 _menuChannel.ShowMenu = ShowMenu;
                 _menuChannel.HideMenu = HideMenu;
-                _menuChannel.AddItem = AddItem;
-                _menuChannel.RemoveItem = RemoveItem;
-                _menuChannel.UpdateCount = UpdateCount;
-                _menuChannel.SetCurrentItem = SetCurrentItem;
+                _menuChannel.UpdateView = UpdateView;
+                _menuChannel.SetInventory = SetInventory;
+                _menuChannel.SetCurrent = HighlightItem;
             }
             else
             {
-                Debug.Log("menu channel not assingned");
+                Debug.Log("Menu Channel not assingned");
                 return;
             }
+        }
 
+        public void SetInventory(BombInventory inventory)
+        {
+            _inventory = inventory;
         }
 
         public void ShowMenu()
@@ -42,64 +46,48 @@ namespace BomberGame.UI
             Debug.Log("Hide menu");
         }
 
-
-        public void AddItem(string id, int count)
+        public void UpdateView()
         {
-            if(_itemsCount.ContainsKey(id) == false)
+            foreach (string id in _inventory.ItemCount.Keys)
             {
-                _itemsCount.Add(id, count);
-                Sprite sprite = _bombSprites.GetSprite(id);
-                if (sprite == null)
+                int count = _inventory.ItemCount[id];
+                if (_shownItems.Contains(id))
                 {
-                    Debug.Log($"sprite {id} was not found");
-                    return;
+                    _ui.UpdateText(id, count.ToString());
+                    if(count <=0 )
+                    {
+                        _ui.HideBlock(id);
+                        _shownItems.Remove(id);
+                    }
                 }
-                int bInd = _ui.SetBlock(sprite, count.ToString());
-                _elementID.Add(id, bInd);
-                _ui.Highlight(bInd);
+                else
+                {
+                    if(count > 0)
+                    {
+                        Sprite sprite = _bombSprites.GetSprite(id);
+                        if (sprite == null)
+                        {
+                            Debug.Log($"sprite {id} was not found");
+                            return;
+                        }
+                        _ui.SetBlock(sprite, count.ToString(), id);
+                        _ui.Highlight(id);
+                        _shownItems.Add(id);
+                    }
+                }
             }
-            else
+            string currentItem = _inventory.CurrentID;
+            if(currentItem != _highlighted && _shownItems.Contains(currentItem))
             {
-                UpdateCount(id, count);
+                HighlightItem(currentItem);
             }
         }
 
-        public void UpdateCount(string id, int count)
+        public void HighlightItem(string id)
         {
-            if (_itemsCount.ContainsKey(id) == true)
-            {
-                _ui.UpdateText(_elementID[id], count.ToString());
-            }
-            else
-            {
-                AddItem(id, count);
-            }
+            _ui.Highlight(id);
         }
 
-        public void SetCurrentItem(string id)
-        {
-            if (_elementID.ContainsKey(id) == true)
-            {
-                _ui.Highlight(_elementID[id]);
-            }
-            else
-            {
-                Debug.Log($"Element {id} not added. Cannot highlight");
-            }
-        }
-
-        public void RemoveItem(string id)
-        {
-            if(_itemsCount.ContainsKey(id) == false)
-            {
-                Debug.Log($"item {id} was not stored");
-                return;
-            }
-     
-            _ui.HideBlock(_elementID[id]);
-            _itemsCount.Remove(id);
-            _elementID.Remove(id);
-        }
         
     }
 }

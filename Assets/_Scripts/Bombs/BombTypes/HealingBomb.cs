@@ -97,7 +97,6 @@ namespace BomberGame
 
         protected void CharachterEffect(GameObject go)
         {
-            Debug.Log("Healing charachter");
             IHealable h = go.GetComponent<IHealable>();
             if(h != null)
                 h.Heal(1);

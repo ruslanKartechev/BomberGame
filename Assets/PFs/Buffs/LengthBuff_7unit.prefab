@@ -62,8 +62,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a32a3de70b0cc4b9ddacb00c519960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myBuff: {fileID: 11400000, guid: 1f8fd90dc3c33d34084ee7812fe375a6, type: 2}
+  _myBuff: {fileID: 11400000, guid: 0a3c5bf170a8e514d90418bf5e0cca7e, type: 2}
   _collider: {fileID: 1222770993961096817}
+  StartDropped: 0
   _anim: {fileID: 1654236729}
   _rend: {fileID: 3182777049053548346}
   _sprites: {fileID: 11400000, guid: 889e796598b5943499e5212d4b8f005c, type: 2}
@@ -159,9 +160,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1349790467
-  m_SortingLayer: 3
-  m_SortingOrder: 3
+  m_SortingLayerID: -204117449
+  m_SortingLayer: 4
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5167dec3c72c6bf49b724edf47db172a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

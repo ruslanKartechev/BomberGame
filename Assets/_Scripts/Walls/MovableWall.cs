@@ -6,16 +6,18 @@ namespace BomberGame
 {
     public class MovableWall : Wall, IMovableWall
     {
-        [SerializeField] private SingleCircleCaster _raycaster;
+        [SerializeField] private CircleCaster _raycaster;
         private bool isMoving = false;
         private void Start()
         {
             if(_raycaster == null)
-                _raycaster = GetComponent<SingleCircleCaster>();
+                _raycaster = GetComponent<CircleCaster>();
         }
         
         public bool Move(Vector3 dir,float distance, float time)
         {
+            if (isMoving == true)
+                return false;
             _raycaster.Distance = distance;
             RaycastHit2D other = _raycaster.RaycastAll(transform.position, dir).Find(t => t.collider.gameObject != gameObject);
             if (other == true)

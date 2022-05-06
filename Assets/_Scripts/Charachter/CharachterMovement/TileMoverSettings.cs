@@ -8,12 +8,7 @@ namespace BomberGame
     public class TileMoverSettings : ScriptableObject
     {
         public float GridDistance = 0.1f;
-        public float SnapTime = 0.2f;
-        public float Speed = 1f;
-        public float GetTime()
-        {
-            return SnapTime / Speed;
-        }
+        public float MoveTime = 0.2f;
 
     }
 }
