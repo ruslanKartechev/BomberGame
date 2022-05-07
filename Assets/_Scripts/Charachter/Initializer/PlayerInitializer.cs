@@ -5,6 +5,9 @@ namespace BomberGame
 {
     public class PlayerInitializer : MonoBehaviour
     {
+        public string PlayerID;
+        public bool AutoRandom = true;
+        [Space(10)]
         [SerializeField] private PlayerSettingsSO _settings;
         public bool SelfInit = false;
         [Space(10)]
@@ -13,7 +16,7 @@ namespace BomberGame
         [SerializeField] private CharachterViewBase _view;
         [SerializeField] private PlayerInventoryManager _inventory;
         [SerializeField] private BombPlacerBase _bombPlacer;
-        [SerializeField] private BombBuffer _buffer;
+        [SerializeField] private BombBuffApplier _buffer;
         private void Awake()
         {
             if (_mover == null)
@@ -27,7 +30,11 @@ namespace BomberGame
             if (_bombPlacer == null)
                 _bombPlacer = GetComponent<BombPlacerBase>();
             if (_buffer == null)
-                _buffer = GetComponent<BombBuffer>();
+                _buffer = GetComponent<BombBuffApplier>();
+            if (AutoRandom)
+            {
+                PlayerID = "player_" + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9);
+            }
         }
 
         private void Start()
@@ -60,6 +67,7 @@ namespace BomberGame
             {
                 _health._channel = _settings.HealthUIChannel;
                 _health.Init(_settings.StartHealth);
+                _health.CharacterID = PlayerID;
             }
 
             if(_inventory != null)
@@ -72,8 +80,17 @@ namespace BomberGame
             {
                 _buffer._Buffs = _settings.BombBuffers;
             }
-            _view.Sprites = _settings.Sprites;
-            _bombPlacer.AttackChannel = _settings.AttackChannel;
+            
+            if (_bombPlacer)
+            {
+                _bombPlacer.AttackChannel = _settings.AttackChannel;
+                _bombPlacer.CharachterID = PlayerID;
+            }
+            if (_view)
+            {
+                _view.Sprites = _settings.Sprites;
+            }
+
         }
 
         public void StartPlayer()

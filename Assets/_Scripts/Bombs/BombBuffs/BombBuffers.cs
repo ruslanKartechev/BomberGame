@@ -7,8 +7,8 @@ namespace BomberGame
     [CreateAssetMenu(fileName = "BombBuffByID", menuName = "SO/BombBuffByID", order = 1)]
     public class BombBuffers : ScriptableObject
     {
-        public List<BombBuffBase> Buffers = new List<BombBuffBase>();
-        public BombBuffBase GetBuff(string id)
+        public List<BuffBase> Buffers = new List<BuffBase>();
+        public BuffBase GetBuff(string id)
         {
             return Buffers.Find(t => t.ID == id);
         }

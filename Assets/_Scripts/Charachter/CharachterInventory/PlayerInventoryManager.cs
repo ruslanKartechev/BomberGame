@@ -12,6 +12,7 @@ namespace BomberGame
 
         private InventoryBase _bombInventory;
         private InventoryBase _buffInventory;
+        private ICharachterBuffer _charachterBuffer;
 
         public void Init(BombInventory bombInv, BuffInventory buffInv)
         {
@@ -22,6 +23,11 @@ namespace BomberGame
             _bombMenuChannel?.RaiseUpdateView();
             _buffMenuChannel?.RaiseSetInventory(buffInv);
             _buffMenuChannel?.RaiseUpdateView();
+            _charachterBuffer = GetComponent<ICharachterBuffer>();
+            if(_charachterBuffer == null)
+            {
+                Debug.Log($"Charachter buffer not found {gameObject.name}");
+            }
         }
 
         public override string GetBomb()
@@ -70,12 +76,12 @@ namespace BomberGame
             _bombMenuChannel?.RaiseUpdateView();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            switch (collision.gameObject.tag)
+            switch (collider.gameObject.tag)
             {
                 case Tags.Bomb:
-                    IStorable storable = collision.gameObject.GetComponent<IStorable>();
+                    IStorable storable = collider.gameObject.GetComponent<IStorable>();
                     if (storable != null)
                     {
                         storable.Store(_bombInventory);
@@ -85,10 +91,22 @@ namespace BomberGame
                     }
                     break;
                 case Tags.BombBuff:
-                    storable = collision.gameObject.GetComponent<IStorable>();
+                    storable = collider.gameObject.GetComponent<IStorable>();
                     if (storable != null)
                         storable.Store(_buffInventory);
                     _buffMenuChannel?.RaiseUpdateView();
+                    break;
+                case Tags.CharachterBuff:
+                    BuffProvider provider = collider.gameObject.GetComponent<BuffProvider>();
+                    if(provider)
+                    {
+                        BuffBase buff = provider._myBuff;
+                        if (buff)
+                        {
+                            _charachterBuffer.BuffCharachter(gameObject, buff);
+                            provider.Store(null);
+                        }
+                    }
                     break;
             }
         }

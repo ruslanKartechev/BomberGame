@@ -11,8 +11,6 @@ namespace BomberGame
         [Space(5)]
         [SerializeField] private BombLineEffectSO _effect;
         [SerializeField] private BombCountEffectBase _countEffect;
-        [Space(5)]
-        [SerializeField] private CameraShakeChannelSO _camShakeChannel;
         private float _piercing;
         public override void InitCoundown()
         {
@@ -29,7 +27,6 @@ namespace BomberGame
 
         protected void Explode()
         {
-            _camShakeChannel?.RaiseEventCameraShake();
             for (int i = 0; i < _settings.CastDirections.Count; i++)
             {
                 float length = CastSide(_settings.CastDirections[i]);
@@ -38,6 +35,7 @@ namespace BomberGame
                 else
                     StartCoroutine(_effect.GetLine(transform.position, _settings.CastDirections[i], length, null));
             }
+            OnExplode?.Invoke();
         }
         private void HideBomb()
         {
@@ -83,7 +81,7 @@ namespace BomberGame
                 {
                     IDamagable d = hit.GO.GetComponent<IDamagable>();
                     if (d != null)
-                        d.TakeDamage(1);
+                        d.TakeDamage(_settings.Damage, CharachterID);
 
                     IWall wall = hit.GO.GetComponent<IWall>();
                     if (wall == null)
@@ -109,7 +107,7 @@ namespace BomberGame
             {
                 IDamagable d = hit.GO.GetComponent<IDamagable>();
                 if (d != null)
-                    d.TakeDamage(1);
+                    d.TakeDamage(_settings.Damage,CharachterID);
 
             }
         }

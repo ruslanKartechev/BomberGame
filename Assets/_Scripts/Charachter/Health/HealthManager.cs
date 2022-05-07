@@ -6,7 +6,7 @@ namespace BomberGame
 {
     public class HealthManager : MonoBehaviour, IDamagable, IHealable
     {
-        
+        public string CharacterID;
         public bool SelfInit = false;
         public HealthUIChanngelSO _channel;
 
@@ -40,7 +40,7 @@ namespace BomberGame
             _health = _startHealth;
         }
 
-        public virtual void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage, string dealer)
         {
             if (!IsDamagable)
                 return;

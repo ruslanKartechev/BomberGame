@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BomberGame
 {
 
-    public class BombBuffBase : ScriptableObject
+    public class BuffBase : ScriptableObject
     {
         public string ID;
         public virtual void Apply(GameObject target)

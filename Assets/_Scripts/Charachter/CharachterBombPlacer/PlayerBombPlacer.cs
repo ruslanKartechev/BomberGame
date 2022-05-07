@@ -4,6 +4,7 @@ namespace BomberGame
 {
     public class PlayerBombPlacer : BombPlacerBase
     {
+        [SerializeField] private BombExplosionHandler _explosionEffect;
         [SerializeField] private CharachterBombPositioner _positioner;
         [Space(5)]
         [SerializeField] private BombColorer _colorer;
@@ -46,6 +47,8 @@ namespace BomberGame
                 _colorer?.ColorBomb(b);
 
                 BombBase bomb = b.GetComponent<BombBase>();
+                bomb.CharachterID = CharachterID;
+                bomb.OnExplode = OnExplode;
                 PlaceBomb(bomb);
                 bomb.InitCoundown();
                 _bombBuffer?.BuffBomb(b, _inventory.GetBombBuffs());
@@ -67,6 +70,10 @@ namespace BomberGame
             {
                 target.Place(transform.position);
             }
+        }
+        public void OnExplode()
+        {
+            _explosionEffect?.OnExplosion();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BomberGame {
 
     public class BuffProvider : MonoBehaviour, IStorable
     {
-        [SerializeField] protected BombBuffBase _myBuff;
+        public BuffBase _myBuff;
         [SerializeField] protected Collider2D _collider;
 
         public string GetID()
@@ -17,11 +17,12 @@ namespace BomberGame {
 
         public virtual void Store(IInventory inventory)
         {
-            inventory.AddItem(_myBuff.ID,1);
-            if(_collider != null)
-                _collider.enabled = false;
-            
-            
+            if (inventory != null)
+            {
+                inventory.AddItem(_myBuff.ID, 1);
+                if (_collider != null)
+                    _collider.enabled = false;
+            }
             Destroy(gameObject);
         }
 

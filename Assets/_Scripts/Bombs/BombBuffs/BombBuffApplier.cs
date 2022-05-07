@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BomberGame
 {
-    public class BombBuffer : MonoBehaviour, IBuffer
+    public class BombBuffApplier : MonoBehaviour, IBuffer
     {
         public BombBuffers _Buffs;
 

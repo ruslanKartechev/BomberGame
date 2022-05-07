@@ -7,6 +7,7 @@ namespace BomberGame
     {
         public InputAttackChannelSO AttackChannel;
         public BombsPrefabs _bombPrefabs;
+        public string CharachterID;
         public abstract void Enable();
         public abstract void Disable();
     }

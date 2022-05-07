@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6577f49fecbd20a45a65fb2dd333f5f6, type: 3}
   m_Name: EnemySettingsSO
   m_EditorClassIdentifier: 
-  GridSnapTime: 0.2
+  GridSnapTime: 0.1
   StartHealth: 2
   BombInventory: {fileID: 11400000, guid: 0f402c9ea2d36444d82aecbd396dd103, type: 2}
   BuffInventory: {fileID: 11400000, guid: 62734aec5606aa949a626adddfe11b21, type: 2}

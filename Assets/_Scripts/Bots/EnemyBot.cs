@@ -9,6 +9,10 @@ namespace BomberGame
 
     public class EnemyBot : MonoBehaviour
     {
+        public string BotID;
+        public bool AutoRandom = true;
+        [Space(10)]
+
         private BotStates _state;
         public BotStates State { get { return _state; } }
         [Header("debug only")]
@@ -33,6 +37,10 @@ namespace BomberGame
                 _bombPlacer = GetComponent<BotBombPlacer>();
             if (_inventory == null)
                 _inventory = GetComponent<BotInventoryManager>();
+            if (AutoRandom)
+            {
+                BotID = "bot_" + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9) ;
+            }
         }
 
         private void Start()
@@ -49,11 +57,16 @@ namespace BomberGame
             _settings = settings;
             _mover?.Init(_settings.GridSnapTime);
             _view?.Init(_mover, _settings.Sprites);
-            _bombPlacer?.Init(_mover, _settings.BombPrefabs, _settings.TimeMin, _settings.TimeMax);
+            if(_bombPlacer != null)
+            {
+                _bombPlacer.Init(_mover, _settings.BombPrefabs, _settings.TimeMin, _settings.TimeMax);
+                _bombPlacer.ChrachterID = BotID;
+            }
             if (_health != null)
             {
                 _health.OnDeath += OnDeath;
                 _health.Init(_settings.StartHealth);
+                _health.CharacterID = BotID;
             }
             if(_inventory != null)
             {

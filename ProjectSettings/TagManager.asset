@@ -8,6 +8,7 @@ TagManager:
   - BombBuff
   - StaticWall
   - Wall
+  - CharachterBuff
   layers:
   - Default
   - TransparentFX

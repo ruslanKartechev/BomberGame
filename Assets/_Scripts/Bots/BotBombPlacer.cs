@@ -7,7 +7,9 @@ namespace BomberGame
 {
     public class BotBombPlacer : MonoBehaviour
     {
+        public string ChrachterID;
         public BombsPrefabs BombPrefabs;
+        [SerializeField] private BombColorer _colorer;
         [SerializeField] private EnemyMover _mover;
         private float _timeMin;
         private float _timeMax;
@@ -68,7 +70,9 @@ namespace BomberGame
                 return;
             GameObject b = BombPrefabs.GetPrefab(id);
             b = Instantiate(b);
+            _colorer?.ColorBomb(b);
             BombBase bomb = b.GetComponent<BombBase>();
+            bomb.CharachterID = ChrachterID;
             Vector3 position = _mover.PrevPosition;
             bomb.Place(position);
             bomb.InitCoundown();

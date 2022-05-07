@@ -12,6 +12,7 @@ namespace BomberGame
         public const string Charachter = "Player";
         public const string Bomb = "Bomb";
         public const string BombBuff = "BombBuff";
+        public const string CharachterBuff = "CharachterBuff";
 
     }
 

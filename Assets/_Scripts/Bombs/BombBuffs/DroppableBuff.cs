@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace BomberGame
 {
-    public interface IDroppable
-    {
-        void Drop();
-    }
+
     public class DroppableBuff : BuffProvider, IDroppable
     {
         [SerializeField] private bool StartDropped;
@@ -33,7 +30,11 @@ namespace BomberGame
         public void Drop()
         {
             _collider.enabled = true;
-            _rend.sprite = _sprites.BuffSprites.Find(t => t.ID == _myBuff.ID).Sprite;
+            SpriteByID spriteData = _sprites.BuffSprites.Find(t => t.ID == _myBuff.ID);
+            if(spriteData != null)
+            {
+                _rend.sprite = spriteData.Sprite;
+            }
             _rend.color = DroppedColor;
             _anim.Play(DroppedAnimName);
         }

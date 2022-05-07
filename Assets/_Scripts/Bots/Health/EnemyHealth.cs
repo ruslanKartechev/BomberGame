@@ -44,10 +44,14 @@ namespace BomberGame
             base.Restore();
         }
 
-        public override void TakeDamage(int damage)
+        public override void TakeDamage(int damage, string dealer)
         {
+            if (dealer == CharacterID)
+            {
+                return;
+            }
             _effect?.Execute();
-            base.TakeDamage(damage);
+            base.TakeDamage(damage, dealer);
             
            
         }

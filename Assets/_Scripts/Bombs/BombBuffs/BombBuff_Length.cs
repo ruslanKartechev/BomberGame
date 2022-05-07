@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BomberGame
 {
     [CreateAssetMenu(fileName = "BombBuff_Length", menuName = "SO/Buffs/BombBuff_Length", order = 1)]
-    public class BombBuff_Length : BombBuffBase
+    public class BombBuff_Length : BuffBase
     {
         public int NewExplosionLength;
         public override void Apply(GameObject target)

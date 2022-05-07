@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BomberGame
 {
-    public class EnemyRandomMover : EnemyMover
+    public class EnemyRandomMover : EnemyMover, ISpeedBuffable
     {
         [SerializeField] private PositionChecker _positionChecher;
         private DirectionGenerator _directionGen;
@@ -12,7 +12,7 @@ namespace BomberGame
         private Coroutine _randomWalk;
         private bool _isMoving = false;
         [SerializeField] private float _gridSize = 1;
-
+        private float _speedBuff = 1;
         public override void Init(float moveTime)
         {
             _directionGen = new DirectionGenerator();
@@ -32,7 +32,6 @@ namespace BomberGame
         {
             if (_randomWalk != null) 
                 StopCoroutine(_randomWalk);
-            Debug.Log("random mover disabled");
         }
 
         private int _directionMoves = 0;
@@ -50,7 +49,7 @@ namespace BomberGame
                     if (allow == true)
                     {
                         Vector3 moveVector = _gridSize * CurrentDir;
-                        StartCoroutine(Snapping(_moveTime, moveVector));
+                        StartCoroutine(Snapping(_moveTime / _speedBuff, moveVector));
                         RaiseDirChange();
                         _directionMoves++;
                         if (_directionMoves >= _directionMax)
@@ -71,7 +70,7 @@ namespace BomberGame
         {
             CurrentDir = _directionGen.GetDirectionOther(CurrentDir);
             _directionMoves = 0;
-            _directionMax = Random.Range(2, 9);
+            _directionMax = Random.Range(4, 9);
         }
 
 
@@ -99,7 +98,15 @@ namespace BomberGame
         // MoveDirection
 
 
-
+        public void BuffSpeed(float multiplier)
+        {
+            if (multiplier <= 0)
+            {
+                Debug.Log("negative speed multiplier");
+                return;
+            }
+            _speedBuff = multiplier;
+        }
 
     }
 

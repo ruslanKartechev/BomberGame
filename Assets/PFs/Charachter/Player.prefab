@@ -73,7 +73,7 @@ TrailRenderer:
   m_SortingLayerID: -1322701477
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.12
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1.610182
@@ -90,30 +90,39 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6661251
-        value: 0.7534224
-        inSlope: -1.1060908
-        outSlope: -1.1060908
+        time: 0.49497446
+        value: 0.9849243
+        inSlope: -0.07698786
+        outSlope: -0.07698786
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.26453716
-        outWeight: 0.23875774
+        inWeight: 0.33333334
+        outWeight: 1
       - serializedVersion: 3
-        time: 1
-        value: 0.5215149
-        inSlope: 0
-        outSlope: 0
+        time: 0.81682473
+        value: 0.63281703
+        inSlope: -1.2327372
+        outSlope: -1.2327372
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.27298155
+        outWeight: 0.49449944
+      - serializedVersion: 3
+        time: 0.99542236
+        value: 0.35678762
+        inSlope: -2.1433213
+        outSlope: -2.1433213
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.44061187
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.62352943, g: 0.16470587, b: 0.24578464, a: 0.75686276}
-      key1: {r: 0.254717, g: 0, b: 0.07713722, a: 1}
+      key0: {r: 0.8679245, g: 0.28248486, b: 0.3875638, a: 0.75686276}
+      key1: {r: 1, g: 0, b: 0.30769253, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0.7058824}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -142,10 +151,10 @@ TrailRenderer:
     numCornerVertices: 10
     numCapVertices: 10
     alignment: 0
-    textureMode: 0
+    textureMode: 2
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.04
+  m_MinVertexDistance: 0.01
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &2016422096662645872
@@ -160,8 +169,10 @@ GameObject:
   - component: {fileID: 6410029608486759579}
   - component: {fileID: 2016422096662645870}
   - component: {fileID: 1609177010}
+  - component: {fileID: 5980733341667163523}
   - component: {fileID: 4138618834948920652}
   - component: {fileID: 324991248874992326}
+  - component: {fileID: 642869630795050436}
   - component: {fileID: 7166731283210534147}
   - component: {fileID: 4158129441052449608}
   - component: {fileID: 2016422096662645871}
@@ -205,6 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de07c619a4cd94e4aadd680266592867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerID: 
+  AutoRandom: 1
   _settings: {fileID: 11400000, guid: 57d05c5108eeec04ba765422a7f65d32, type: 2}
   SelfInit: 1
   _mover: {fileID: 2016422096662645870}
@@ -246,6 +259,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bombMenuChannel: {fileID: 11400000, guid: 039703f0103472a4ca2f1aa42e21ab95, type: 2}
   _buffMenuChannel: {fileID: 11400000, guid: c7092fb47cbf6014d9b4631962e188a0, type: 2}
+--- !u!114 &5980733341667163523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016422096662645872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191afbd68b4e6c54a92f1c3b528c639e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4138618834948920652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackChannel: {fileID: 11400000, guid: ed5b0689f76b49844a7c70a3a441faf3, type: 2}
   _bombPrefabs: {fileID: 11400000, guid: 7b63fcd5df1033a469bb57342f72b46f, type: 2}
+  CharachterID: 
+  _explosionEffect: {fileID: 642869630795050436}
   _positioner:
     _tileMover: {fileID: 2016422096662645870}
   _colorer:
@@ -280,6 +307,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Buffs: {fileID: 11400000, guid: b4abfb99d1e5b094b879858940e9b7a0, type: 2}
+--- !u!114 &642869630795050436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016422096662645872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffde0ee920a07cb488681f948753ba42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camShakeChannel: {fileID: 11400000, guid: 7a117b53d936f1446b9eabe81db00b3c, type: 2}
 --- !u!114 &7166731283210534147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c26a4e39a160a4186a5dd6626980db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterID: 
   SelfInit: 0
   _channel: {fileID: 11400000, guid: d8a8bbe6162a80640bffa4e8800660cb, type: 2}
   DebugStartHealth: 2

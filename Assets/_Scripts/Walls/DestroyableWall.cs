@@ -8,7 +8,7 @@ namespace BomberGame
         [SerializeField] private Collider2D _collider;
 
         public event Notifier OnDestroyed;
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, string damager)
         {
             OnDestroyed?.Invoke();
             StartCoroutine(Destroying());

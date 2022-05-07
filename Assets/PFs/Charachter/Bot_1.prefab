@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 6281494742920162742}
   - component: {fileID: 7064318104373329256}
   - component: {fileID: 6281494742920162743}
+  - component: {fileID: 7808483884034308439}
   - component: {fileID: 6281494742920162740}
   - component: {fileID: 6281494742920162745}
   - component: {fileID: 5812110407477150441}
@@ -163,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5ece00b3eba8438f82929332a5189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BotID: 
+  AutoRandom: 1
   _settings: {fileID: 11400000, guid: 744740b5631f4174c9847ce996a04d13, type: 2}
   SelfInit: 1
   _mover: {fileID: 6281494742920162743}
@@ -199,6 +202,18 @@ MonoBehaviour:
     _raycaster: {fileID: 6281494742920162744}
     _charachter: {fileID: 6281494742920162746}
   _gridSize: 1
+--- !u!114 &7808483884034308439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281494742920162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191afbd68b4e6c54a92f1c3b528c639e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6281494742920162740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +226,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edcdbd3d3537a2d4588ddbf592c2543c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChrachterID: 
   BombPrefabs: {fileID: 0}
+  _colorer:
+    _bombColor:
+      serializedVersion: 2
+      rgba: 4281150975
   _mover: {fileID: 6281494742920162743}
 --- !u!114 &6281494742920162745
 MonoBehaviour:
@@ -225,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f9bc420ef15b94dbb213c701afb2ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterID: 
   SelfInit: 0
   _channel: {fileID: 0}
   _effect: {fileID: 5812110407477150441}

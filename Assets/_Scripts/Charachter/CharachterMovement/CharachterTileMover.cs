@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 namespace BomberGame
 {
-    public class CharachterTileMover : CharachterMoverBase
+    public class CharachterTileMover : CharachterMoverBase, ISpeedBuffable
     {
         [SerializeField] private bool _selfInit = true;
         [SerializeField] private float DebugStartSpeed = 0.15f;
@@ -15,6 +15,7 @@ namespace BomberGame
         private bool _isMoving = false;
         [SerializeField]  private float _gridSize = 1;
         private float _moveTime;
+        private float _speedBuff = 1;
         private void Start()
         {
             if (_selfInit)
@@ -75,7 +76,7 @@ namespace BomberGame
                 if (res.Allow)
                 {
                     Vector3 moveVector = _gridSize * dir;
-                    StartCoroutine(Snapping(_moveTime, moveVector));
+                    StartCoroutine(Snapping(_moveTime / _speedBuff, moveVector));
                 }
             }
         }
@@ -98,5 +99,14 @@ namespace BomberGame
             _isMoving = false;
         }
 
+        public void BuffSpeed(float multiplier)
+        {
+            if (multiplier <= 0)
+            {
+                Debug.Log("negative speed multiplier");
+                return;
+            }
+            _speedBuff = multiplier;
+        }
     }
 }

@@ -43,9 +43,9 @@ namespace BomberGame
             base.Restore();
         }
 
-        public override void TakeDamage(int damage)
+        public override void TakeDamage(int damage, string dealer)
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(damage,dealer);
             _effect?.Execute();
             _channel?.RaiseOnDamage();
             _channel?.RaiseSetHealth(_health.ToString());
