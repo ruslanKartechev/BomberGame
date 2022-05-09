@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3182777047357960109, guid: 3d790a3c0e5973d4087644e93f54fa43, type: 3}
       propertyPath: m_Name
-      value: LengthBuff_3unit
+      value: LengthBuff_3unit Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3182777047357960111, guid: 3d790a3c0e5973d4087644e93f54fa43, type: 3}
       propertyPath: m_RootOrder
@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: _myBuff
       value: 
       objectReference: {fileID: 11400000, guid: dd7e80895b6a68f4fab3579cbf708ad7, type: 2}
+    - target: {fileID: 3646558948734131916, guid: 3d790a3c0e5973d4087644e93f54fa43, type: 3}
+      propertyPath: StartDropped
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d790a3c0e5973d4087644e93f54fa43, type: 3}

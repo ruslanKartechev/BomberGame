@@ -31,7 +31,7 @@ namespace CommonGame.Sound
             _soundChannel.OnStopFXLoop = StopLoopedEffect;
             if (sounds == null)
             {
-                Debug.Log("</color=red>SoundData is not assigned </color>");
+                Debug.Log("<color=red>SoundData is not assigned </color>");
                 return;
             }
             sourceManager.Init();

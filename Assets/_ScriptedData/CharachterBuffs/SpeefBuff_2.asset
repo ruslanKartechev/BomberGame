@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SpeefBuff_2
   m_EditorClassIdentifier: 
   ID: speed_2
-  SpeedMultiplier: 2
+  SpeedMultiplier: 1.6

@@ -4,14 +4,11 @@ using UnityEngine;
 
 namespace BomberGame
 {
-
-
-    public class CharachterBuffApplier : MonoBehaviour, ICharachterBuffer
+    public class CharachterBuffer : MonoBehaviour, ICharachterBuffer
     {
         public void BuffCharachter(GameObject charachter, BuffBase buff)
         {
             buff.Apply(charachter);   
-            
         }
 
     }

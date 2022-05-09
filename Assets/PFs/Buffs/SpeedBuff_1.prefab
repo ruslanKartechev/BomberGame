@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -204117449
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3494dc956dfd7174abc07060940a2848, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5167dec3c72c6bf49b724edf47db172a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6752946641658400541}
   - component: {fileID: 6752946641658400543}
   m_Layer: 0
-  m_Name: SpeedBuff_2x
+  m_Name: SpeedBuff_1
   m_TagString: CharachterBuff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a32a3de70b0cc4b9ddacb00c519960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myBuff: {fileID: 11400000, guid: 3fe6b646023eb5c48ac169c78699d6f1, type: 2}
+  _myBuff: {fileID: 11400000, guid: 6571133b6bcbf5b48afe37c02ab10a00, type: 2}
   _collider: {fileID: 6752946641658400543}
-  StartDropped: 1
+  StartDropped: 0
   _anim: {fileID: 6752946641658400541}
   _rend: {fileID: 6752946641574902891}
   _sprites: {fileID: 11400000, guid: 889e796598b5943499e5212d4b8f005c, type: 2}

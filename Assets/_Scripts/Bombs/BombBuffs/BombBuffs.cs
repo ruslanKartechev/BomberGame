@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BomberGame
 {
     [CreateAssetMenu(fileName = "BombBuffByID", menuName = "SO/BombBuffByID", order = 1)]
-    public class BombBuffers : ScriptableObject
+    public class BombBuffs : ScriptableObject
     {
         public List<BuffBase> Buffers = new List<BuffBase>();
         public BuffBase GetBuff(string id)

@@ -11,10 +11,16 @@ namespace BomberGame
         [Space(5)]
         [SerializeField] private BombLineEffectSO _effect;
         [SerializeField] private BombCountEffectBase _countEffect;
-        private float _piercing;
+
+        private float _explosionLength;
+        private int _piercing;
+        private bool _limitPiercing;
+
         public override void InitCoundown()
         {
+            _explosionLength = _settings.StartExplosionLength;
             _piercing = _settings.PiercingDepth;
+            _limitPiercing = _settings.UsePiercingDepth;
             _countdown = StartCoroutine(Countdown(_settings.CountdownTime, Explode));
             _countEffect.StartCountdown(_settings.CountdownTime);
         }
@@ -29,7 +35,7 @@ namespace BomberGame
         {
             for (int i = 0; i < _settings.CastDirections.Count; i++)
             {
-                float length = CastSide(_settings.CastDirections[i]);
+                float length = CastSide(_settings.CastDirections[i], transform.position);
                 if (i == 0)
                     StartCoroutine(_effect.GetLine(transform.position, _settings.CastDirections[i], length, HideBomb));
                 else
@@ -44,12 +50,17 @@ namespace BomberGame
 
 
         #region Raycasting
-        protected float CastSide(Vector3 dir)
+        protected float CastSide(Vector3 dir, Vector3 startPos)
         {
-            float distance = _settings.GridSize * _settings.StartExplosionLength;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _settings.CircleCastRad, dir, distance, _settings.CastMask);
+            float rad = _settings.CircleCastRad;
+            float distance = _settings.GridSize * _explosionLength - rad - _settings.GridSize / 2;
+            float realDistance = _settings.GridSize * _explosionLength + _settings.GridSize / 2;
+            Vector3 start = startPos + dir * (_settings.GridSize / 2 + rad);
+            Debug.DrawLine(start, start + dir * (distance), Color.white, 1f);
+
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(start, rad, dir, distance, _settings.CastMask);
             if (hits.Length == 0)
-                return distance;
+                return realDistance;
             List<RaycastResult> result = new List<RaycastResult>(hits.Length);
             foreach (RaycastHit2D h in hits)
             {
@@ -59,16 +70,17 @@ namespace BomberGame
             result.Sort();
             RaycastResult fixedWall = result.Find(t => t.GO.tag == Tags.StaticWall);
             if (fixedWall != null)
-            {
                 distance = fixedWall.Distance;
-            }
-            if (_settings.UsePiercingDepth)
+
+            if (_limitPiercing)
             {
-                return SwitchResultPiercing(result, distance);
+                return SwitchResultPiercing(result, realDistance);
             }
             else
-                SwitchResultNoPiercing(result, distance);
-            return distance;
+            {
+                SwitchResultNoPiercing(result, realDistance);
+                return realDistance;
+            }
         }
 
         protected virtual float SwitchResultPiercing(List<RaycastResult> result, float distance)

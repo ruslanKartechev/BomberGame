@@ -6,7 +6,7 @@ namespace BomberGame
 {
     public class BombBuffApplier : MonoBehaviour, IBuffer
     {
-        [Inject] protected BombBuffers _Buffs;
+        [Inject] protected BombBuffs _Buffs;
 
         public void BuffBomb(GameObject target, Dictionary<string,int> _buffs)
         {
@@ -15,7 +15,7 @@ namespace BomberGame
             foreach(string id in _buffs.Keys)
             {
                 string fullID = id + "_" + _buffs[id];
-                _Buffs.GetBuff(fullID).Apply(target);
+                _Buffs.GetBuff(fullID)?.Apply(target);
             }
         }
     }

@@ -28,11 +28,11 @@ namespace BomberGame
         }
         protected void Explode()
         {
-            float length = CastSide(_settings.CastDirections[0]);
+            float length = CastSide(_settings.CastDirections[0], transform.position);
             StartCoroutine(_effect.GetLine(transform.position, _settings.CastDirections[0], length, HideBomb));
             for (int i = 1; i < _settings.CastDirections.Count; i++)
             {
-                length = CastSide(_settings.CastDirections[i]);
+                length = CastSide(_settings.CastDirections[i], transform.position);
                 StartCoroutine(_effect.GetLine(transform.position, _settings.CastDirections[i], length, null));
             }
         }
@@ -41,12 +41,17 @@ namespace BomberGame
             Destroy(gameObject);
         }
         #region Raycasting
-        protected float CastSide(Vector3 dir)
+        protected float CastSide(Vector3 dir, Vector3 startPos)
         {
-            float distance = _settings.GridSize * _explosionLength;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _settings.CircleCastRad, dir, distance, _settings.CastMask);
+            float rad = _settings.CircleCastRad;
+            float distance = _settings.GridSize * _explosionLength - rad - _settings.GridSize / 2;
+            float realDistance = _settings.GridSize * _explosionLength + _settings.GridSize / 2;
+            Vector3 start = startPos + dir * (_settings.GridSize / 2 + rad);
+            Debug.DrawLine(start, start + dir * (distance), Color.white, 1f);
+
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(start, rad, dir, distance, _settings.CastMask);
             if (hits.Length == 0)
-                return distance;
+                return realDistance;
             List<RaycastResult> result = new List<RaycastResult>(hits.Length);
             foreach (RaycastHit2D h in hits)
             {
@@ -56,12 +61,10 @@ namespace BomberGame
             result.Sort();
             RaycastResult fixedWall = result.Find(t => t.GO.tag == Tags.StaticWall);
             if (fixedWall != null)
-            {
                 distance = fixedWall.Distance;
-            }
-            SwitchResultPiercing(result, distance);
 
-            return distance;
+            return SwitchResultPiercing(result, realDistance);
+
         }
         protected float SwitchResultPiercing(List<RaycastResult> result, float distance)
         {

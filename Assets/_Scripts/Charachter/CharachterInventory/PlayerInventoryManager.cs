@@ -12,7 +12,6 @@ namespace BomberGame
 
         private InventoryBase _bombInventory;
         private InventoryBase _buffInventory;
-        private ICharachterBuffer _charachterBuffer;
 
         public void Init(BombInventory bombInv, BuffInventory buffInv)
         {
@@ -23,11 +22,6 @@ namespace BomberGame
             _bombMenu?.UpdateView();
             _buffMenu?.SetInventory(buffInv);
             _buffMenu?.UpdateView();
-            _charachterBuffer = GetComponent<ICharachterBuffer>();
-            if(_charachterBuffer == null)
-            {
-                Debug.Log($"Charachter buffer not found {gameObject.name}");
-            }
         }
 
         public override string GetBomb()
@@ -103,8 +97,9 @@ namespace BomberGame
                         BuffBase buff = provider._myBuff;
                         if (buff)
                         {
-                            _charachterBuffer.BuffCharachter(gameObject, buff);
-                            provider.Store(null);
+                            buff.Apply(gameObject);
+                            provider.Store(_buffInventory);
+                            _buffMenu?.UpdateView();
                         }
                     }
                     break;

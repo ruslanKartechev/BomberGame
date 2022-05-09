@@ -169,7 +169,6 @@ GameObject:
   - component: {fileID: 6410029608486759579}
   - component: {fileID: 2016422096662645870}
   - component: {fileID: 1609177010}
-  - component: {fileID: 5980733341667163523}
   - component: {fileID: 4138618834948920652}
   - component: {fileID: 324991248874992326}
   - component: {fileID: 642869630795050436}
@@ -238,7 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f053b681e9d3774e91947bea2ea3e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputMoveChannel: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
   _selfInit: 0
   DebugStartSpeed: 0.15
   _positionCheck:
@@ -257,20 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b834a8ac9d71c04cb2b3b9bcea0bec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bombMenuChannel: {fileID: 11400000, guid: 039703f0103472a4ca2f1aa42e21ab95, type: 2}
-  _buffMenuChannel: {fileID: 11400000, guid: c7092fb47cbf6014d9b4631962e188a0, type: 2}
---- !u!114 &5980733341667163523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016422096662645872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191afbd68b4e6c54a92f1c3b528c639e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4138618834948920652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,8 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0a68c46485e3245a457c9159b39af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackChannel: {fileID: 11400000, guid: ed5b0689f76b49844a7c70a3a441faf3, type: 2}
-  _bombPrefabs: {fileID: 11400000, guid: 7b63fcd5df1033a469bb57342f72b46f, type: 2}
   CharachterID: 
   _explosionEffect: {fileID: 642869630795050436}
   _positioner:
@@ -306,7 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f019b1bfc751434dac94f70eafeda3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Buffs: {fileID: 11400000, guid: b4abfb99d1e5b094b879858940e9b7a0, type: 2}
 --- !u!114 &642869630795050436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterID: 
   SelfInit: 0
-  _channel: {fileID: 11400000, guid: d8a8bbe6162a80640bffa4e8800660cb, type: 2}
   DebugStartHealth: 2
   _effect: {fileID: 2053461769852609314}
 --- !u!114 &2053461769852609314
@@ -646,5 +626,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sprites: {fileID: 11400000, guid: db9c01ef5c5efd240b046978673b3b33, type: 2}
   IsDebug: 1
-  _inputEvents: {fileID: 11400000, guid: 7f9a6ec43090c6342b5085281dd88090, type: 2}
   _renderer: {fileID: 2016422097805735883}

@@ -11,6 +11,7 @@ namespace BomberGame.UI
         public Image BombImage;
         public TextMeshProUGUI Text;
         public Image HighlightImage;
+        public Animator Anim;
         [HideInInspector] public int OrderPos;
         [HideInInspector] public bool IsShown = false;
         private bool isHighlighted = false;
@@ -18,6 +19,7 @@ namespace BomberGame.UI
         public void SetText(string text)
         {
             Text.text = text;
+            Anim.Play("Pop");
         }
 
         public void Show()

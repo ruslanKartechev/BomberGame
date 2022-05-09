@@ -19,7 +19,7 @@ namespace BomberGame
         public SpriteViewSO Sprites;
         [Header("Lists")]
         public BombsPrefabs BombPrefabs;
-        public BombBuffers BombBuffers;
+        public BombBuffs BombBuffers;
         [Header("BombPlacement Time Delay")]
         public float TimeMin;
         public float TimeMax;

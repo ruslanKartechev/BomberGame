@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2a2f09283557c45b2871b3fb71ac6a, type: 3}
   m_Name: DefaultBombSettingsSO
   m_EditorClassIdentifier: 
-  GridSize: 1
+  GridSize: 2
   StartExplosionLength: 1
   CountdownTime: 1
+  Damage: 1
   ExplosionCount: 1
   ExplosionsDelay: 0.1
   CastMask:
