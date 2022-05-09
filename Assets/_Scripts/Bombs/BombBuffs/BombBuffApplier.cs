@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Zenject;
 namespace BomberGame
 {
     public class BombBuffApplier : MonoBehaviour, IBuffer
     {
-        public BombBuffers _Buffs;
+        [Inject] protected BombBuffers _Buffs;
 
         public void BuffBomb(GameObject target, Dictionary<string,int> _buffs)
         {

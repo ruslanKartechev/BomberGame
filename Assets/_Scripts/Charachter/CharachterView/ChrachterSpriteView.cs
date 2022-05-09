@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CommonGame.Controlls;
+using Zenject;
 namespace BomberGame
 {
     public class ChrachterSpriteView : CharachterViewBase
     {
         [SerializeField] private bool IsDebug = false;
-        [SerializeField] protected InputMoveChannelSO _inputEvents;
+        [Inject] protected InputMoveChannelSO _inputEvents;
         [SerializeField] SpriteRenderer _renderer;
         private void Start()
         {

@@ -8,18 +8,13 @@ namespace BomberGame
     [System.Serializable]
     public class PositionChecker
     {
-        [SerializeField]  private CircleCaster _raycaster;
-        public Transform _charachter;
+        [SerializeField] private CircleCaster _raycaster;
+        [SerializeField] private Transform _charachter;
 
-        public PositionChecker(CircleCaster caster, Transform charachter, LayerMask mask)
+        public PositionChecker(CircleCaster caster, Transform charachter)
         {
             _raycaster = caster;
             _charachter = charachter;
-            _raycaster.Mask = mask;
-        }
-        public void SetMask(LayerMask mask)
-        {
-            _raycaster.Mask = mask;
         }
 
         public CasterResult CheckPosition(Vector3 dir, float distance)

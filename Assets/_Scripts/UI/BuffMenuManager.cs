@@ -4,11 +4,10 @@ using UnityEngine;
 using BomberGame;
 namespace BomberGame.UI
 {
-    public class BuffMenuManager : MonoBehaviour
+    public class BuffMenuManager : BuffMenuBase
     {
         [SerializeField] private BuffMenuUI _ui;
         [SerializeField] private BuffSpriteByID _sprites;
-        [SerializeField] private BuffUIChannelSO _channel;
         private BuffInventory _inventory;
         private Dictionary<string, int> _shown = new Dictionary<string, int>();
 
@@ -16,16 +15,14 @@ namespace BomberGame.UI
         {
             _ui.Init();
             _ui.HideAll();
-            _channel.SetInventory = SetInventory;
-            _channel.UpdateView = UpdateView;
         }
 
-        public void SetInventory(BuffInventory inventory)
+        public override void SetInventory(BuffInventory inventory)
         {
             _inventory = inventory;
         }
 
-        public void UpdateView()
+        public override void UpdateView()
         {
             foreach(string id in _inventory.ItemCount.Keys)
             {

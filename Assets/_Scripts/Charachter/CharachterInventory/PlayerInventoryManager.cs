@@ -2,13 +2,13 @@ using UnityEngine;
 using BomberGame.UI;
 using System.Collections.Generic;
 using System.Linq;
-
+using Zenject;
 namespace BomberGame
 {
     public class PlayerInventoryManager : CharachterInventory
     {
-        public BombUIChannelSO _bombMenuChannel;
-        public BuffUIChannelSO _buffMenuChannel;
+        [Inject] private BuffMenuBase _buffMenu;
+        [Inject] private BombMenuBase _bombMenu;
 
         private InventoryBase _bombInventory;
         private InventoryBase _buffInventory;
@@ -19,10 +19,10 @@ namespace BomberGame
             _bombInventory = bombInv;
             _buffInventory = buffInv;
             _bombInventory.Init();
-            _bombMenuChannel?.RaiseSetInventory(bombInv);
-            _bombMenuChannel?.RaiseUpdateView();
-            _buffMenuChannel?.RaiseSetInventory(buffInv);
-            _buffMenuChannel?.RaiseUpdateView();
+            _bombMenu?.SetInventory(bombInv);
+            _bombMenu?.UpdateView();
+            _buffMenu?.SetInventory(buffInv);
+            _buffMenu?.UpdateView();
             _charachterBuffer = GetComponent<ICharachterBuffer>();
             if(_charachterBuffer == null)
             {
@@ -41,7 +41,7 @@ namespace BomberGame
             {
                 id = "empty";
             }
-            _bombMenuChannel?.RaiseUpdateView();
+            _bombMenu?.UpdateView();
             return id;
 
         }
@@ -57,7 +57,7 @@ namespace BomberGame
         public void StoreBomb(string id, int count)
         {
             _bombInventory.AddItem(id, count);
-            _bombMenuChannel?.RaiseUpdateView();
+            _bombMenu?.UpdateView();
         }
 
         public void StoreBuff(string id, int count)
@@ -65,15 +65,15 @@ namespace BomberGame
             bool added = _buffInventory.AddItem(id, count);
             if (added)
             {
-                _buffMenuChannel?.RaiseUpdateView();
+                _buffMenu?.UpdateView();
             }
         }
 
         public void SetCurrentBomb(string id)
         {
             _bombInventory.SetCurrentItemID(id);
-            _bombMenuChannel?.RaiseSetCurrent(id);
-            _bombMenuChannel?.RaiseUpdateView();
+            _bombMenu?.UpdateView();
+            _bombMenu?.SetCurrent(id);
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -87,14 +87,14 @@ namespace BomberGame
                         storable.Store(_bombInventory);
                         string id = storable.GetID();
                         _bombInventory.SetCurrentItemID(id);
-                        _buffMenuChannel?.RaiseUpdateView();
+                        _buffMenu?.UpdateView();
                     }
                     break;
                 case Tags.BombBuff:
                     storable = collider.gameObject.GetComponent<IStorable>();
                     if (storable != null)
                         storable.Store(_buffInventory);
-                    _buffMenuChannel?.RaiseUpdateView();
+                    _buffMenu?.UpdateView();
                     break;
                 case Tags.CharachterBuff:
                     BuffProvider provider = collider.gameObject.GetComponent<BuffProvider>();
@@ -115,7 +115,7 @@ namespace BomberGame
         {
             _buffInventory?.ClearInventory();
             _bombInventory?.ClearInventory();
-            _bombMenuChannel?.RaiseUpdateView();
+            _bombMenu?.UpdateView();
         }
 
         private void OnDestroy()

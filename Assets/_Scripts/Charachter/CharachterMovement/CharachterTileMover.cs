@@ -24,7 +24,6 @@ namespace BomberGame
                 EnableMovement();
             }
             PrevTilePosition = transform.position;
-            _positionCheck._charachter = transform;
         }
 
         public override void Init(float moveSpeed)
@@ -72,11 +71,12 @@ namespace BomberGame
         {
             if(_isMoving == false)
             {
-                CasterResult res = _positionCheck.CheckPositionPush(dir, _gridSize, _moveTime);
+                float time = _moveTime / _speedBuff;
+                CasterResult res = _positionCheck.CheckPositionPush(dir, _gridSize, time);
                 if (res.Allow)
                 {
                     Vector3 moveVector = _gridSize * dir;
-                    StartCoroutine(Snapping(_moveTime / _speedBuff, moveVector));
+                    StartCoroutine(Snapping(time, moveVector));
                 }
             }
         }

@@ -1,49 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Zenject;
 namespace CommonGame.Controlls
 {
     public class KeyboardInputManager : ControllManagerBase
     {
-        [SerializeField] private InputMoveChannelSO _inputChannel;
-        [SerializeField] private InputAttackChannelSO _attackChannel;
+        [Inject] private InputMoveChannelSO _inputChannel;
+        [Inject] private InputAttackChannelSO _attackChannel;
+        private Coroutine _inputCheck;
+
         public override void DisableControlls()
         {
-            throw new System.NotImplementedException();
+            if (_inputCheck != null)
+                StopCoroutine(_inputCheck);
         }
 
         public override void EnableControlls()
         {
-            throw new System.NotImplementedException();
+
+            if (_inputCheck != null)
+                StopCoroutine(_inputCheck);
+            _inputCheck = StartCoroutine(InputCheck());
         }
 
         public override void Init(object settings)
         {
-            throw new System.NotImplementedException();
+            //
         }
 
-        private void Update()
+        private IEnumerator InputCheck()
         {
-            if (Input.GetKey(KeyCode.W))
+            while (true)
             {
-                _inputChannel.RaiseEventUp();
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                _inputChannel.RaiseEventRight();
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                _inputChannel.RaiseEventDown();
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                _inputChannel.RaiseEventLeft();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _attackChannel.RaiseEventAttack();
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    _inputChannel.RaiseEventUp();
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    _inputChannel.RaiseEventRight();
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    _inputChannel.RaiseEventDown();
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    _inputChannel.RaiseEventLeft();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    _attackChannel.RaiseEventAttack();
+                }
+                yield return null;
             }
         }
 

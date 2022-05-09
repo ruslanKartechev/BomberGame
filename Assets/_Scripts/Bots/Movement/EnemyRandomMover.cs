@@ -16,7 +16,6 @@ namespace BomberGame
         public override void Init(float moveTime)
         {
             _directionGen = new DirectionGenerator();
-            _positionChecher._charachter = transform;
             _moveTime = moveTime;
 
         }

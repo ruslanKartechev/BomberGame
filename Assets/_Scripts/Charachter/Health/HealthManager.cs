@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BomberGame.UI;
 namespace BomberGame
 {
     public class HealthManager : MonoBehaviour, IDamagable, IHealable
     {
         public string CharacterID;
         public bool SelfInit = false;
-        public HealthUIChanngelSO _channel;
-
         public event Notifier OnDamage;
         public event Notifier OnDeath;
-
         protected int _startHealth;
         protected int _health;
         //public int Health { get { return _health; } }

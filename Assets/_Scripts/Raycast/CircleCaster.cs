@@ -6,9 +6,7 @@ namespace BomberGame
     public class CircleCaster : MonoBehaviour
     {
         public RaycastHit2D _lastHit;
-        [Space(10)]
-        [HideInInspector] public float Distance;
-        [Space(10)]
+        public float Distance;
         public float AdditionalDistance;
         public float CircleCastRadius;
         public LayerMask Mask;
