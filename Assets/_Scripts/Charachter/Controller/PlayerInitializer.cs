@@ -4,45 +4,26 @@ using Zenject;
 namespace BomberGame
 {
 
-    public class PlayerInitializer : MonoBehaviour, IPlayer
+    public class PlayerInitializer : MonoBehaviour, IActor
     {
-        public string PlayerID;
-        public bool AutoRandom = true;
-        [Space(10)]
+        public string ActorID;
         [SerializeField] private PlayerSettingsSO _settings;
         public bool SelfInit = false;
         [Space(10)]
-        [SerializeField] private CharachterMoverBase _mover;
+        // health
         [SerializeField] private CharachterHealth _health;
-        [SerializeField] private CharachterViewBase _view;
-        [SerializeField] private PlayerInventoryManager _inventory;
-        [SerializeField] private BombPlacerBase _bombPlacer;
-        [SerializeField] private BombBuffApplier _buffer;
-        private void Awake()
-        {
-            if (_mover == null)
-                _mover = GetComponent<CharachterMoverBase>();
-            if (_view == null)
-                _view = GetComponent<CharachterViewBase>();
-            if (_health == null)
-                _health = GetComponent<CharachterHealth>();
-            if (_inventory == null)
-                _inventory = GetComponent<PlayerInventoryManager>();
-            if (_bombPlacer == null)
-                _bombPlacer = GetComponent<BombPlacerBase>();
-            if (_buffer == null)
-                _buffer = GetComponent<BombBuffApplier>();
-        }
+        // view
+        [SerializeField] private SpriteView _view;
+        // movement
+        [SerializeField] private CircleCaster _caster;
+        private CharachterTileMover _mover;
+        private InputMoveController _inputMoveController;
 
         private void Start()
         {
             if (SelfInit == true)
             {
-                if (AutoRandom)
-                {
-                    PlayerID = "player_" + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9) + UnityEngine.Random.Range(0, 9);
-                }
-                Init(_settings, PlayerID);
+                Init(_settings, ActorID);
                 SetActive();
             }
         }
@@ -50,47 +31,38 @@ namespace BomberGame
 
         public void Init(PlayerSettingsSO setting, string ID)
         {
+            ActorID = ID;
             if (_settings == null)
             {
                 Debug.Log("Settings not set");
                 return;
             }
-            if (_mover != null)
-            {
-                _mover.Init(_settings.GridSnapTime);
-            }
-            if (_health != null)
-            {
-                _health.Init(_settings.StartHealth);
-                _health.CharacterID = PlayerID;
-            }
+            _mover = new CharachterTileMover(new RaycastPositionValidator(_caster), _view,_settings.MovementSettings);
+            _inputMoveController = new InputMoveController(_mover, _settings.InputMoveChannel, _view);
+            _view?.Init(_settings.Sprites);
+            _view?.Enable();
 
-            if (_inventory != null)
-            {
-                BombInventory bombInv = ScriptableObject.Instantiate<BombInventory>(_settings.BombInventory);
-                BuffInventory buffInv = ScriptableObject.Instantiate<BuffInventory>(_settings.BuffInventory);
-                _inventory.Init(bombInv, buffInv);
-            }
-            PlayerID = ID;
         }
 
         public void SetIdle()
         {
-            _mover.DisableMovement();
-            _health.DisableDamage();
-            _bombPlacer.Disable();
+            _health?.DisableDamage();
+            _inputMoveController?.DisableMovement();
+
         }
 
         public void SetActive()
         {
-            _mover.EnableMovement();
-            _health.EnableDamage();
-            _bombPlacer.Enable();
+            _health?.EnableDamage();
+            _inputMoveController?.EnableMovement();
+
         }
 
         public void Kill()
         {
 
         }
+
+
     }
 }

@@ -12,7 +12,10 @@ namespace BomberGame
     {
 
         [Header("Movement")]
-        public float GridSnapTime = 0.2f;
+        public MoveSettings MovementSettings;
+        public InputMoveChannelSO InputMoveChannel;
+        [Header("View")]
+        public SpriteViewSO Sprites;
         [Header("Health")]
         public int StartHealth = 2;
         [Header("Inventories")]

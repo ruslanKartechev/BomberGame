@@ -15,9 +15,6 @@ namespace BomberGame
                 components.gameObject.transform.position = _defaultSpawn.position;
             else
                 components.gameObject.transform.position = Vector3.zero;
-            CharachterTileMover mover = new CharachterTileMover();
-
-
         }
     }
 }

@@ -5,12 +5,9 @@ using CommonGame.Controlls;
 using Zenject;
 namespace BomberGame
 {
-    public abstract class CharachterMoverBase : MonoBehaviour
+    public abstract class CharachterMoverBase 
     {
-        [Inject] protected InputMoveChannelSO InputMoveChannel;
-
-        public abstract void Init(float moveSpeed);
-        public abstract void EnableMovement();
-        public abstract void DisableMovement();
+        public abstract void Init();
+        public abstract void Move(Vector3 direction);
     }
 }

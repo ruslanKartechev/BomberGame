@@ -4,25 +4,31 @@ using UnityEngine;
 
 namespace BomberGame
 {
-
-    [System.Serializable]
-    public class PositionChecker
+    public interface IPositionValidator
     {
-        [SerializeField] private CircleCaster _raycaster;
-        [SerializeField] private Transform _charachter;
+        ValidationResult CheckPosition(Vector3 dir, Vector3 from, float distance);
+        
+    }
 
-        public PositionChecker(CircleCaster caster, Transform charachter)
+
+    public class RaycastPositionValidator : IPositionValidator
+    {
+       private CircleCaster _raycaster;
+        public RaycastPositionValidator(CircleCaster caster)
         {
             _raycaster = caster;
-            _charachter = charachter;
+            if(_raycaster == null)
+            {
+                Debug.Log("Passed null raycaster");
+            }
         }
 
-        public CasterResult CheckPosition(Vector3 dir, float distance)
+        public ValidationResult CheckPosition(Vector3 dir, Vector3 from, float distance)
         {
-            CasterResult result = new CasterResult();
+            ValidationResult result = new ValidationResult();
             result.Allow = false;
             _raycaster.Distance = distance;
-            _raycaster.Raycast(_charachter.position, dir);
+            _raycaster.Raycast(from, dir);
             if (_raycaster._lastHit == false)
             {
                 result.Allow = true;
@@ -35,12 +41,12 @@ namespace BomberGame
             return result;
         }
 
-        public CasterResult CheckPositionPush(Vector3 dir, float distance, float moveTime)
+        public ValidationResult CheckPositionPush(Vector3 dir, Vector3 from, float distance, float moveTime)
         {
-            CasterResult result = new CasterResult();
+            ValidationResult result = new ValidationResult();
             result.Allow = false;
             _raycaster.Distance = distance;
-            _raycaster.Raycast(_charachter.position, dir);
+            _raycaster.Raycast(from, dir);
             if (_raycaster._lastHit == false)
             {
                 result.Allow = true;
@@ -69,7 +75,7 @@ namespace BomberGame
 
     }
 
-    public struct CasterResult
+    public struct ValidationResult
     {
         public bool Allow;
         public IWall BlockingWall;

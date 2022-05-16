@@ -167,7 +167,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2016422096662645873}
   - component: {fileID: 6410029608486759579}
-  - component: {fileID: 2016422096662645870}
   - component: {fileID: 1609177010}
   - component: {fileID: 4138618834948920652}
   - component: {fileID: 324991248874992326}
@@ -175,8 +174,6 @@ GameObject:
   - component: {fileID: 7166731283210534147}
   - component: {fileID: 4158129441052449608}
   - component: {fileID: 2016422096662645871}
-  - component: {fileID: 453341579491589716}
-  - component: {fileID: 2053461769852609314}
   - component: {fileID: 1609177008}
   - component: {fileID: 7666136658635700328}
   m_Layer: 0
@@ -215,34 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de07c619a4cd94e4aadd680266592867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerID: 
-  AutoRandom: 1
+  ActorID: Player
   _settings: {fileID: 11400000, guid: 57d05c5108eeec04ba765422a7f65d32, type: 2}
   SelfInit: 1
-  _mover: {fileID: 2016422096662645870}
-  _health: {fileID: 453341579491589716}
-  _view: {fileID: 2016422097805735880}
-  _inventory: {fileID: 1609177010}
-  _bombPlacer: {fileID: 4138618834948920652}
-  _buffer: {fileID: 324991248874992326}
---- !u!114 &2016422096662645870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016422096662645872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f053b681e9d3774e91947bea2ea3e65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _selfInit: 0
-  DebugStartSpeed: 0.15
-  _positionCheck:
-    _raycaster: {fileID: 2016422096662645871}
-    _charachter: {fileID: 2016422096662645873}
-  _gridSize: 1
+  _view:
+    _renderer: {fileID: 2016422097805735883}
+    _transform: {fileID: 2016422096662645873}
+  _caster: {fileID: 2016422096662645871}
 --- !u!114 &1609177010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,8 +245,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharachterID: 
   _explosionEffect: {fileID: 642869630795050436}
-  _positioner:
-    _tileMover: {fileID: 2016422096662645870}
   _colorer:
     _bombColor:
       serializedVersion: 2
@@ -351,37 +325,6 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &453341579491589716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016422096662645872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c26a4e39a160a4186a5dd6626980db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CharacterID: 
-  SelfInit: 0
-  DebugStartHealth: 2
-  _effect: {fileID: 2053461769852609314}
---- !u!114 &2053461769852609314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016422096662645872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 235ffa817c4147a40b63843146e8f0d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FlickColor: {r: 1, g: 1, b: 1, a: 0}
-  Duration: 0.25
-  Rend: {fileID: 2016422097805735883}
 --- !u!58 &1609177008
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -538,7 +481,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2016422097805735882}
   - component: {fileID: 2016422097805735883}
-  - component: {fileID: 2016422097805735880}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -612,18 +554,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2016422097805735880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016422097805735885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc3620012931cb843b9f2e4c8a1e5bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Sprites: {fileID: 11400000, guid: db9c01ef5c5efd240b046978673b3b33, type: 2}
-  IsDebug: 1
-  _renderer: {fileID: 2016422097805735883}

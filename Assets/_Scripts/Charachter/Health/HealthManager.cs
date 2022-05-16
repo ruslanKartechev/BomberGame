@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 namespace BomberGame
 {
-    public class HealthManager : MonoBehaviour, IDamagable, IHealable
+    public class HealthManager : IDamagable, IHealable
     {
         public string CharacterID;
         public bool SelfInit = false;

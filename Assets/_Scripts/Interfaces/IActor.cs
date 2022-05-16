@@ -2,7 +2,7 @@
 
 namespace BomberGame
 {
-    public interface IPlayer
+    public interface IActor
     {
         void Init(PlayerSettingsSO _settings, string ID);
         void SetIdle();

@@ -12,7 +12,6 @@ namespace BomberGame
         [SerializeField] private bool AutoStart = true;
 
         [SerializeField] private TrackInit _trackInit;
-        [SerializeField] private BotsInit _botInit;
         private void Start()
         {
             if (AutoStart)
@@ -27,7 +26,6 @@ namespace BomberGame
         {
             yield return null;
             yield return StartCoroutine(_trackInit.InitTrack());
-            yield return StartCoroutine(_botInit.InitBots());
         }
     }
 

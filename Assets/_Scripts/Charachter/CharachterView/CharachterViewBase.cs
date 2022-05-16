@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 namespace BomberGame
 {
-    public abstract class CharachterViewBase : MonoBehaviour
+    [System.Serializable]
+
+    public abstract class CharachterViewBase
     {
-        public SpriteViewSO Sprites;
         public abstract void Enable();
         public abstract void Disable();
     }
