@@ -8,7 +8,7 @@ namespace BomberGame
     public class PrefabByID
     {
         public string ID;
-        public GameObject PF;
+        public BombManager Bomb;
     }
 
 

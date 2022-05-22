@@ -6,14 +6,14 @@ namespace BomberGame
 {
     public class LootDropper : MonoBehaviour
     {
-        [SerializeField] protected DestroyableWall _wall;
+        [SerializeField] protected SoftWall _wall;
         [SerializeField] protected GameObject _droppable;
         private void Awake()
         {
             if (_droppable == null)
                 return;
             if (_wall == null)
-                _wall = GetComponent<DestroyableWall>();
+                _wall = GetComponent<SoftWall>();
             if(_wall != null)
             {
                 _wall.OnDestroyed += DropBuff;

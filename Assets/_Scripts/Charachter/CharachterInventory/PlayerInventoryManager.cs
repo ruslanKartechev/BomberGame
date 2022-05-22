@@ -5,7 +5,7 @@ using System.Linq;
 using Zenject;
 namespace BomberGame
 {
-    public class PlayerInventoryManager : CharachterInventory
+    public class PlayerInventoryManager : MonoBehaviour
     {
         [Inject] private BuffMenuBase _buffMenu;
         [Inject] private BombMenuBase _bombMenu;
@@ -24,7 +24,7 @@ namespace BomberGame
             _buffMenu?.UpdateView();
         }
 
-        public override string GetBomb()
+        public string GetBomb()
         {
             string id = _bombInventory.GetCurrentItemID();
             if (_bombInventory.TakeItem(id, 1))
@@ -40,7 +40,7 @@ namespace BomberGame
 
         }
         
-        public override Dictionary<string, int> GetBombBuffs()
+        public Dictionary<string, int> GetBombBuffs()
         {
             if (_buffInventory != null)
                 return _buffInventory.ItemCount;

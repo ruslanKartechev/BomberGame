@@ -1,5 +1,5 @@
 
-namespace BomberGame
+namespace BomberGame.Health
 {
     public interface IHealable
     {

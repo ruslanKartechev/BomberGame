@@ -7,13 +7,13 @@ namespace BomberGame {
     public class BombsPrefabs : ScriptableObject
     {
         public List<PrefabByID> PrefabByID = new List<PrefabByID>();
-        public GameObject GetPrefab(string id)
+        public BombManager GetPrefab(string id)
         {
-            GameObject pf = PrefabByID.Find(t => t.ID == id).PF;
-            if (pf == null)
+            BombManager bomb = PrefabByID.Find(t => t.ID == id).Bomb;
+            if (bomb == null)
                 Debug.Log($"Prefab with id: {id} not found");
 
-            return pf;
+            return bomb;
         }
     }
 }

@@ -5,6 +5,6 @@ namespace BomberGame
     public abstract class DamageEffectBase : MonoBehaviour
     {
         
-        public abstract void Execute();
+        public abstract void Play();
     }
 }

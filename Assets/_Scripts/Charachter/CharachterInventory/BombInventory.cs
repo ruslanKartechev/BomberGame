@@ -49,7 +49,7 @@ namespace BomberGame
                 }
                 else
                 {
-                    Debug.Log($"Cannot return {count} items");
+                    Debug.Log($"Cannot return {count} items with id {id}");
                     return false;
                 }
 

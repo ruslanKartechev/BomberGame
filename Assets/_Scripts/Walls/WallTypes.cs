@@ -2,5 +2,5 @@
 
 namespace BomberGame
 {
-    public enum WallType{ Static, Soft, Movable}
+    public enum ObstalceType{ Static, Soft, Movable}
 }

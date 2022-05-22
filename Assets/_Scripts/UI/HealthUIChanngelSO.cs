@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 namespace BomberGame.UI
@@ -7,7 +5,7 @@ namespace BomberGame.UI
     [CreateAssetMenu(fileName = "HealthUIChanngelSO", menuName = "SO/UI/HealthUIChanngelSO", order = 1)]
     public class HealthUIChanngelSO : ScriptableObject
     {
-        public Action<string> SetHealth;
+        public Action<int> Update;
         public Action OnHeal;
         public Action OnDamage;
     
@@ -17,6 +15,10 @@ namespace BomberGame.UI
             {
                 OnDamage.Invoke();
             }
+            else
+            {
+                Debug.Log("On damage action null");
+            }
         }
         
         public void RaiseOnHeal()
@@ -25,14 +27,24 @@ namespace BomberGame.UI
             {
                 OnHeal.Invoke();
             }
-        }
-
-        public void RaiseSetHealth(string text)
-        {
-            if(SetHealth != null)
+            else
             {
-                SetHealth.Invoke(text);
+                Debug.Log("on health action is null");
             }
         }
+
+        public void RaiseUpdate(int value)
+        {
+            if(Update != null)
+            {
+                Update.Invoke(value);
+            }
+            else
+            {
+                Debug.Log("Update action is null");
+            }
+        }
+
+
     }
 }

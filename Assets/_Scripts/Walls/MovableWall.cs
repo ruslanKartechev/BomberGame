@@ -12,8 +12,10 @@ namespace BomberGame
         {
             if(_raycaster == null)
                 _raycaster = GetComponent<CircleCaster>();
+            _map.AddToMap(transform.position, this);
+
         }
-        
+
         public bool Move(Vector3 dir,float distance, float time)
         {
             if (isMoving == true)

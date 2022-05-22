@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+using UnityEngine;
+using TMPro;
 namespace BomberGame.UI
 {
-
-    public class HealthUIEffects : MonoBehaviour, IDamageEffect, IHealEffect
+    [System.Serializable]
+    public class HealthUIEffects
     {
         [SerializeField] private Animator _anim;
         

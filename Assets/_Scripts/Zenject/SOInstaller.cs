@@ -14,6 +14,8 @@ namespace BomberGame
         [Header("ID: 'PlayerView' ")]
         [Space(10)]
         [SerializeField] private SpriteViewSO _playerView;
+        [Space(10)]
+        public Map _testMap;
 
         public override void InstallBindings()
         {
@@ -22,6 +24,9 @@ namespace BomberGame
             Container.Bind<BombBuffs>().FromInstance(_buffs).AsSingle();
             Container.Bind<BuffSpriteByID>().FromInstance(_buffSprites).AsSingle();
             Container.Bind<SpriteViewSO>().FromInstance(_playerView).WithConcreteId("PlayerView");
+
+            Container.Bind<IActorsMap>().FromInstance(_testMap).AsSingle();
+            Container.Bind<IObstacleMap>().FromInstance(_testMap).AsSingle();
 
 
         }

@@ -9,7 +9,7 @@ namespace CommonGame
     {
        // [SerializeField] LevelManager levelManager;
         [Header("General")]
-        [Inject] private ISoundSystem _sounds;
+        //[Inject] private ISoundSystem _sounds;
         [Inject] private IInputSystem _controlls;
 
         private void Start()
@@ -17,7 +17,7 @@ namespace CommonGame
             //if (levelManager == null) levelManager = FindObjectOfType<LevelManager>();
             //levelManager.LoadLast();
             _controlls.Init();
-            _sounds.Init();
+            //_sounds.Init();
         }
     }
 

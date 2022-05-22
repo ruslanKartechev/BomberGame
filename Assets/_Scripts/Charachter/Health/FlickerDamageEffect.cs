@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BomberGame
@@ -15,10 +14,11 @@ namespace BomberGame
         {
             normalColor = Rend.color;
         }
-        public override void Execute()
+        public override void Play()
         {
             if (_flickering != null) StopCoroutine(_flickering);
             _flickering = StartCoroutine(Flickering());
+            Debug.Log("Playing");
         }
         private IEnumerator Flickering()
         {

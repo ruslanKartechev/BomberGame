@@ -4,13 +4,6 @@ using UnityEngine;
 
 namespace BomberGame
 {
-    public interface IPositionValidator
-    {
-        ValidationResult CheckPosition(Vector3 dir, Vector3 from, float distance);
-        
-    }
-
-
     public class RaycastPositionValidator : IPositionValidator
     {
        private CircleCaster _raycaster;
@@ -23,7 +16,7 @@ namespace BomberGame
             }
         }
 
-        public ValidationResult CheckPosition(Vector3 dir, Vector3 from, float distance)
+        public ValidationResult CheckPosition(Vector2 dir, Vector2 from, float distance)
         {
             ValidationResult result = new ValidationResult();
             result.Allow = false;
@@ -35,10 +28,15 @@ namespace BomberGame
             }
             else
             {
-                IWall wall = _raycaster._lastHit.collider.gameObject.GetComponent<IWall>();
-                result.BlockingWall = wall;
+                IAdaptableObstacle wall = _raycaster._lastHit.collider.gameObject.GetComponent<IAdaptableObstacle>();
+                result.Blocking = wall;
             }
             return result;
+        }
+
+        public bool CheckPosition(Vector2 position)
+        {
+            throw new System.NotImplementedException();
         }
 
         public ValidationResult CheckPositionPush(Vector3 dir, Vector3 from, float distance, float moveTime)
@@ -53,13 +51,13 @@ namespace BomberGame
             }
             else
             {
-                IWall wall = _raycaster._lastHit.collider.gameObject.GetComponent<IWall>();
-                result.BlockingWall = wall;
+                IAdaptableObstacle wall = _raycaster._lastHit.collider.gameObject.GetComponent<IAdaptableObstacle>();
+                result.Blocking = wall;
                 if (wall != null)
                 {
-                    switch (wall.GetType())
+                    switch (wall.GetObstacleType())
                     {
-                        case WallType.Movable:
+                        case ObstalceType.Movable:
                             IMovableWall m = _raycaster._lastHit.collider.gameObject.GetComponent<IMovableWall>();
                             bool canMove = m.Move(dir, distance, moveTime);
                             if (canMove == true)
@@ -78,6 +76,6 @@ namespace BomberGame
     public struct ValidationResult
     {
         public bool Allow;
-        public IWall BlockingWall;
+        public IAdaptableObstacle Blocking;
     }
 }

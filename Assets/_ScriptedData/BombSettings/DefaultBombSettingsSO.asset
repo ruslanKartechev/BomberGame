@@ -13,19 +13,13 @@ MonoBehaviour:
   m_Name: DefaultBombSettingsSO
   m_EditorClassIdentifier: 
   GridSize: 2
-  StartExplosionLength: 1
+  StartExplosionLength: 2
   CountdownTime: 1
-  Damage: 1
   ExplosionCount: 1
-  ExplosionsDelay: 0.1
-  CastMask:
-    serializedVersion: 2
-    m_Bits: 65
-  CircleCastRad: 1
+  ExplosionsDelay: 0.5
   CastDirections:
-  - {x: 1, y: 0, z: 0}
-  - {x: -1, y: 0, z: 0}
-  - {x: 0, y: 1, z: 0}
-  - {x: 0, y: -1, z: 0}
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   PiercingDepth: 1
-  UsePiercingDepth: 1

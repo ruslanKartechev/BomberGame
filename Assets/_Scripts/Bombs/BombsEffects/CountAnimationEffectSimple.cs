@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BomberGame
 {
-    public class CountAnimationEffectSimple : BombCountEffectBase
+    public class CountAnimationEffectSimple : BombCountDown
     {
         [SerializeField] private Animator _anim;
         public override void OnExplode()
