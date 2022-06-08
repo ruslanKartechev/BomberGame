@@ -2,12 +2,12 @@
 using UnityEngine;
 namespace BomberGame
 {
-    public interface IActorsMap
+    public interface IActorsMap<T>
     {
-        Dictionary<IAdaptableActor, Vector2> GetActors();
-        Dictionary<Vector2, IAdaptableActor> GetActorsInverse();
-        void AddToMap(IAdaptableActor user, Vector2 position);
-        void RemoveFromMap(IAdaptableActor user);
-        void UpdatePosition(IAdaptableActor user, Vector2 position);
+        void AddToMap(InteractableEntity user, T position);
+        void RemoveFromMap(InteractableEntity user);
+        void UpdatePosition(InteractableEntity user, T position);
+        List<InteractableEntity> GetAllActors();
+        Dictionary<InteractableEntity,T> GetAllActorsPositions();
     }
 }

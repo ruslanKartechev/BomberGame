@@ -2,13 +2,16 @@
 using UnityEngine;
 namespace BomberGame
 {
-    public interface IObstacleMap
+    public interface IObstacleMap<T>
     {
-        Dictionary<Vector2, IAdaptableObstacle> GetObstacles();
-        void AddToMap(Vector2 position, IAdaptableObstacle user);
-        void RemoveFromMap(IAdaptableObstacle user);
-        MapBorders GetBorders();
-        bool IsOnMap(Vector2 position);
+        void AddToMap(T position, InteractableEntity user);
+        void RemoveFromMap(InteractableEntity user);
+        InteractableEntity GetObstacleAt(T position);
+        List<InteractableEntity> GetObstacles();
         float GetGridSize();
+
+        MapBorders GetBorders();
+
+        bool IsOutsideBorders(T position);
     }
 }

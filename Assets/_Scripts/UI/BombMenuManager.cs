@@ -5,7 +5,7 @@ namespace BomberGame.UI
 {
     public class BombMenuManager : BombMenuBase
     {
-        [Inject] private BombSpriteByID _bombSprites;
+        [Inject] private BombsSpriteContainer _bombSprites;
         [SerializeField] private BombMenuUI _ui;
         private BombInventory _inventory;
         private List<string> _shownItems = new List<string>();

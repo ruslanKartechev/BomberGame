@@ -11,15 +11,14 @@ namespace BomberGame
     {
         [SerializeField] private GameObject SoundSystem;
         [SerializeField] private GameObject ControllsSystem;
+        [SerializeField] private BuffManager BuffingSystem;
+        [Space(10)]
+        [SerializeField] private BombParticlesPoolManager _bombParticlePool;
         public override void InstallBindings()
         {
-            Container.Bind<HealthUIBlock>().AsSingle();
-            Container.Bind<BombMenuManager>().AsSingle();
-            //Container.Bind<ISoundSystem>().To<SoundSystem>().FromComponentOn(SoundSystem).AsSingle();
-            Container.Bind<GameManager>().AsSingle();
-            Container.Bind<LevelManager>().AsSingle();
             Container.Bind<IInputSystem>().To<InputSystem>().FromComponentOn(ControllsSystem).AsSingle();
-
+            Container.Bind<BuffManager>().FromInstance(BuffingSystem).AsSingle();
+            Container.Bind<IBombParticlesPool>().To<BombParticlesPoolManager>().FromInstance(_bombParticlePool).AsSingle();
         }
     }
 }

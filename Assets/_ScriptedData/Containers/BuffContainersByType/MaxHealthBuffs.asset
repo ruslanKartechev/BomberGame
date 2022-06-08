@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf296815a5758f40bc74b374105f349, type: 3}
+  m_Name: MaxHealthBuffs
+  m_EditorClassIdentifier: 
+  BuffsList:
+  - {fileID: 11400000, guid: 4fce016aa082f7043827007e0ac42be3, type: 2}
+  - {fileID: 11400000, guid: f9ac049814be86748abf296ca59fd6b9, type: 2}
+  - {fileID: 11400000, guid: 629369cfbe8f7994c9a76c6552c7f2e1, type: 2}
+  - {fileID: 11400000, guid: 158614f81e6192a4186d7afe458a0d3a, type: 2}
+  - {fileID: 11400000, guid: 6c108cacf5081e048a3018ace2f2e7f2, type: 2}
+  - {fileID: 11400000, guid: e22bb6d95fe199c4097866182d5cb8e9, type: 2}

@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-namespace BomberGame
+namespace BomberGame.Bombs
 {
-
-    public abstract class ExplosionEffect : MonoBehaviour
+    public abstract class ExplosionEffect<T> : MonoBehaviour
     {
         public float Duration;
-        public abstract void Play(Vector2 center,  List<ExplosionPositions> results);
+        public abstract void Play(Vector2 center,  List<ExplosionTarget<T>> results);
 
     }
 }

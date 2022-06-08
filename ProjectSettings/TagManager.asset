@@ -17,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
+  - UIParticles
   - 
   - 
   - 
@@ -58,12 +58,12 @@ TagManager:
   - name: MiddleFront
     uniqueID: 4090849847
     locked: 0
-  - name: Front
+  - name: Players
     uniqueID: 2972265819
     locked: 0
-  - name: VFX
+  - name: Bombs
     uniqueID: 3368202975
     locked: 0
-  - name: OverTop
+  - name: Effects
     uniqueID: 80702897
     locked: 0

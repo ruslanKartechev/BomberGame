@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf296815a5758f40bc74b374105f349, type: 3}
+  m_Name: HealBuffs
+  m_EditorClassIdentifier: 
+  BuffsList:
+  - {fileID: 11400000, guid: c7ecea56df9f8e74c9604169c0711014, type: 2}
+  - {fileID: 11400000, guid: 56fa267a89f55ff4f9834463f5b8fb3f, type: 2}
+  - {fileID: 11400000, guid: 75f68908d5c4af648b7cae5e6fa520a4, type: 2}
+  - {fileID: 11400000, guid: 54f82467f3f7cfd409bfabfabb5fc626, type: 2}
+  - {fileID: 11400000, guid: fdec949c3204bda4da34e9dd7c15c38c, type: 2}
+  - {fileID: 11400000, guid: 24b9b44a0f8f92347ad60df1cd139c66, type: 2}
+  - {fileID: 11400000, guid: 06f193cdc8c20454388960bda7a20501, type: 2}
+  - {fileID: 11400000, guid: b155a4636af5c47488227b7c8f307e46, type: 2}
+  - {fileID: 11400000, guid: eee6b2c68056be94fa4718eab9ef1b63, type: 2}
+  - {fileID: 11400000, guid: 74d7f1800e77cad4e96ad92a0c2a7e76, type: 2}
+  - {fileID: 11400000, guid: fd4c7f1e64f82bd48839940f0012fa34, type: 2}
+  - {fileID: 11400000, guid: 21b2b6cc4186dce4fa70d97424686357, type: 2}

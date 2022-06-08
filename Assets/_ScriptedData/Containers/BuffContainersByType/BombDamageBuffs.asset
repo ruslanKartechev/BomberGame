@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf296815a5758f40bc74b374105f349, type: 3}
+  m_Name: BombDamageBuffs
+  m_EditorClassIdentifier: 
+  BuffsList:
+  - {fileID: 11400000, guid: acd302faf1bbd4c4c804fd74e7921f8a, type: 2}
+  - {fileID: 11400000, guid: 258b4e4e1776bee4b8e887b413ebc433, type: 2}
+  - {fileID: 11400000, guid: 2d6efa0247bbf014991bff5346873cfb, type: 2}
+  - {fileID: 11400000, guid: 033a25a7d283e434eb3fbafdf8877e02, type: 2}
+  - {fileID: 11400000, guid: dca1c6125cecc784f8be78da3317b2b9, type: 2}
+  - {fileID: 11400000, guid: 38d7fc0cccf976f48bf3d99ff8b03d26, type: 2}
+  - {fileID: 11400000, guid: 3348425716d018d448b50785aab72402, type: 2}

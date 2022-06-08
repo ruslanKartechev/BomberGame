@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf296815a5758f40bc74b374105f349, type: 3}
+  m_Name: SpeedBuffs
+  m_EditorClassIdentifier: 
+  BuffsList:
+  - {fileID: 11400000, guid: f8cb44749c1e52b40ba0559b59fd9e6a, type: 2}
+  - {fileID: 11400000, guid: ecac9e402fcec0446b805bc82dc71c93, type: 2}
+  - {fileID: 11400000, guid: 5292ea89b7489dc41905c553a7775915, type: 2}
+  - {fileID: 11400000, guid: 52dd563416d0df343bb3b96b503b514d, type: 2}
+  - {fileID: 11400000, guid: 16a042468f464894bacce6c88cf3e26f, type: 2}
+  - {fileID: 11400000, guid: 4fddf7a0339e4cd43979052fcae9d453, type: 2}
+  - {fileID: 11400000, guid: 3c5484845b0cf094c9cca3e4fb76a5c2, type: 2}
+  - {fileID: 11400000, guid: 1953e79d3f84f7f4791b34ec06bb8531, type: 2}
