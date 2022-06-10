@@ -3,24 +3,94 @@ using UnityEngine;
 using System;
 namespace BomberGame
 {
-    public interface IBombMap<T>
+
+    public class NodeMapCopy : INodeMap<Vector2>
     {
-        public event Action<T> OnBombPlaced;
-        void PlaceBomb(T position);
-        void RemoveBomb(T position);
+
+        private Dictionary<Vector2, MapNode> _nodes = new Dictionary<Vector2, MapNode>();
+        private float _gridSize;
+        private MapNodeNeighbours4x _neighboursAlg;
+        private INodeMap<Vector2> _original;
+        public NodeMapCopy(INodeMap<Vector2> original)
+        {
+            _gridSize = original.GetGridSize();
+            _neighboursAlg = new MapNodeNeighbours4x();
+            _original = original;
+            _nodes = CopyMap(_original.GetNodes());
+
+        }
+
+        public void SetUnwalkable(List<Vector2> positions)
+        {
+            if (positions == null)
+                return;
+            Debug.Log($"Set {positions.Count} unwalkable");
+            foreach(Vector2 v in positions)
+            {
+                if(_nodes.TryGetValue(v, out MapNode node))
+                {
+                    node.IsWalkable = false;
+                }
+            }
+        }
+
+        public void SyncToMap(INodeMap<Vector2> map)
+        {
+            _nodes = CopyMap(_original.GetNodes());
+            _gridSize = map.GetGridSize();
+        }
+
+        public void SyncToOriginal()
+        {
+            _nodes = CopyMap(_original.GetNodes());
+        }
+
+        public float GetGridSize() => _gridSize;
+
+        public Node<Vector2> GetNodeAt(Vector2 position)
+        {
+            _nodes.TryGetValue(position, out MapNode node);
+            return node;
+        }
+
+        public Dictionary<Vector2, MapNode> GetNodes()
+        {
+            return _nodes;
+        }
+
+        public List<Node<Vector2>> GetNeighbours(Node<Vector2> node)
+        {
+            return _neighboursAlg.GetNeighbours(node.Value, _nodes, _gridSize);
+        }
+
+        private Dictionary<Vector2, MapNode> CopyMap(Dictionary<Vector2, MapNode> from)
+        {
+            Dictionary<Vector2, MapNode> @out = new Dictionary<Vector2, MapNode>();
+            foreach (Vector2 v in from.Keys)
+            {
+                MapNode node = new MapNode(v, this);
+                node.IsWalkable = from[v].IsWalkable;
+                @out.Add(v, node);
+            }
+
+            return @out;
+        }
+      
     }
+
 
     [CreateAssetMenu(fileName ="Map", menuName = "SO/Maps/Map_")]
     public class Map : ScriptableObject, IObstacleMap<Vector2>, IActorsMap<Vector2>, INodeMap<Vector2>, IBombMap<Vector2>
     {
+        public event Action<Vector2> OnBombPlaced;
+
         [SerializeField] private float _gridSize = 2;
         [SerializeField] private MapBorders _borders;
 
         private MapNonMovableTable<Vector2, InteractableEntity> _obstacles = new MapNonMovableTable<Vector2, InteractableEntity>();
         private MapMovingTable<Vector2, InteractableEntity> _actors = new MapMovingTable<Vector2, InteractableEntity>();
-        private Dictionary<Vector2, MapNode> _mapNodes = new Dictionary<Vector2, MapNode>();
-
-        public event Action<Vector2> OnBombPlaced;
+        private Dictionary<Vector2, MapNode> _nodes = new Dictionary<Vector2, MapNode>();
+        private MapNodeNeighboursAlgorithm<Vector2> _neighboursAlg;
 
 
         #region IObstacleMap
@@ -32,7 +102,7 @@ namespace BomberGame
         void IObstacleMap<Vector2>.AddToMap(Vector2 position, InteractableEntity user)
         {
             _obstacles.AddEntry(user, position);
-            _mapNodes.TryGetValue(position, out MapNode val);
+            _nodes.TryGetValue(position, out MapNode val);
             if (val != null)
                 val.IsWalkable = false;
         }
@@ -93,11 +163,30 @@ namespace BomberGame
         {
             return _actors.GetAllEntries();
         }
+
         Dictionary<InteractableEntity, Vector2> IActorsMap<Vector2>.GetAllActorsPositions()
         {
             return _actors.PositionTable;
         }
 
+        public Vector2 GetActorNodePosition(InteractableEntity user)
+        {
+            var table = _actors.PositionTable;
+            if(table.TryGetValue(user, out Vector2 realPos))
+            {
+                return GetClosestNodePos(realPos);
+            }
+            throw new System.Exception($"Entity {user.EntityID} was not found on the map");
+        }
+
+        private Vector2 GetClosestNodePos(Vector2 realPos)
+        {
+            Vector2 result = new Vector2();
+            result.x = Mathf.Round(realPos.x / _gridSize) * _gridSize;
+            result.y = Mathf.Round(realPos.y / _gridSize) * _gridSize;
+
+            return result;
+        }
         #endregion
 
 
@@ -105,8 +194,9 @@ namespace BomberGame
         #region NodeMap
         public void GenerateMap()
         {
+            _neighboursAlg = new MapNodeNeighbours4x();
             List<Vector2> grid = GenerateGrid();
-            _mapNodes = GenerateMapNodes(grid);
+            _nodes = GenerateMapNodes(grid);
         }
         private List<Vector2> GenerateGrid()
         {
@@ -147,73 +237,23 @@ namespace BomberGame
         
         public Node<Vector2> GetNodeAt(Vector2 position)
         {
-            return _mapNodes[position];
+            return _nodes[position];
         }
+
         public Dictionary<Vector2, MapNode> GetNodes()
         {
-            return _mapNodes;
+            return _nodes;
         }
-        #region MapNodeNeighbours
+
         public List<Node<Vector2>> GetNeighbours(Node<Vector2> node)
         {
-            List <Node<Vector2>> others = new List<Node<Vector2>>();
-            Node<Vector2> l = GetLeftCell(node.Value);
-            Node<Vector2> r = GetRightCell(node.Value);
-            Node<Vector2> u = GetUpCell(node.Value);
-            Node<Vector2> d = GetDownCell(node.Value);
-            if (l != null)
-                others.Add(l);
-            if (r != null)
-                others.Add(r);
-            if (u != null)
-                others.Add(u); 
-           if (d != null)
-                others.Add(d);
-            return others;
+            return _neighboursAlg.GetNeighbours(node.Value, _nodes, _gridSize);
         }
-
-        private Node<Vector2> GetLeftCell(Vector2 gridPosition)
-        {
-            gridPosition += Vector2.left * _gridSize;
-            return TryGetCell(gridPosition);
-        }
-
-        private Node<Vector2> GetRightCell(Vector2 gridPosition)
-        {
-            gridPosition += Vector2.right * _gridSize;
-            return TryGetCell(gridPosition);
-        }
-
-        private Node<Vector2> GetUpCell(Vector2 gridPosition)
-        {
-            gridPosition += Vector2.up * _gridSize;
-            return TryGetCell(gridPosition);
-        }
-
-        private Node<Vector2> GetDownCell(Vector2 gridPosition)
-        {
-            gridPosition -= Vector2.up * _gridSize;
-            return TryGetCell(gridPosition);
-        }
-
-        private Node<Vector2> TryGetCell(Vector2 gridPosition)
-        {
-            MapNode res = null;
-            if (_mapNodes.TryGetValue(gridPosition, out res))
-            {
-                if (res.IsWalkable == true)
-                    return res;
-            }
-            return null;
-        }
-
-
-
-        #endregion
         #endregion
 
 
 
+        #region IBombMap
         public void PlaceBomb(Vector2 position)
         {
             OnBombPlaced?.Invoke(position);
@@ -223,7 +263,7 @@ namespace BomberGame
         {
             
         }
-
+        #endregion
 
     }
 

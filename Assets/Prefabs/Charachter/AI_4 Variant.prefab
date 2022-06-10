@@ -11,9 +11,17 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0d6dda9bd2b46e147a182ecd7e92e187, type: 3}
+    - target: {fileID: 8137945388597282907, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 8137945388597282907, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8137945388702963424, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
       propertyPath: m_Name
-      value: AI_4 Variant
+      value: AI_4
       objectReference: {fileID: 0}
     - target: {fileID: 8137945388702963427, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
       propertyPath: _ID
@@ -27,6 +35,14 @@ PrefabInstance:
       propertyPath: _settings
       value: 
       objectReference: {fileID: 11400000, guid: a39c9ee0b87ab8244beb86c69b411be8, type: 2}
+    - target: {fileID: 8137945388702963427, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
+      propertyPath: SpawnSettings.StartPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8137945388702963427, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
+      propertyPath: SpawnSettings.StartPosition.y
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 8137945388702963436, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -37,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8137945388702963436, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8137945388702963436, guid: b08e8e120f01e5541b3482d775a80796, type: 3}
       propertyPath: m_LocalPosition.z

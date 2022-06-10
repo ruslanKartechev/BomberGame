@@ -19,12 +19,12 @@ namespace BomberGame
             _tokenSource = new CancellationTokenSource();
             _positionGenerator = new RandomPositionGenerator(_map);
             MoveToRandomPosition(_movement.CurrentPosition);
-            _movement.OnPositionReached += OnMovementEnd;
+            _movement.OnPathEnd += OnMovementEnd;
         }
 
-        public override void StopBehaviour()
+        public override void Abort()
         {
-            _movement.OnPositionReached -= OnMovementEnd;
+            _movement.OnPathEnd -= OnMovementEnd;
             _tokenSource?.Cancel();
         }
 
@@ -33,7 +33,7 @@ namespace BomberGame
         public void MoveToRandomPosition(Vector2 currentPosition)
         {
             Vector2 position = _positionGenerator.GetPosition(currentPosition);
-            _movement.Move(position, _tokenSource.Token);
+            _movement.MoveToPosition(position, _tokenSource.Token);
         }
 
         public void OnMovementEnd(MoveResult result)

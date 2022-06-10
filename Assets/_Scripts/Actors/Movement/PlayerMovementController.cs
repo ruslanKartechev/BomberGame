@@ -40,19 +40,19 @@ namespace BomberGame
             switch (dir)
             {
                 case 'u':
-                    _mover.ModeDir(Vector3.up, _tokenSource.Token);
+                    _mover.ModeToDir(Vector3.up, _tokenSource.Token);
 
                     break;
                 case 'd':
-                    _mover.ModeDir(-Vector3.up, _tokenSource.Token);
+                    _mover.ModeToDir(-Vector3.up, _tokenSource.Token);
 
                     break;
                 case 'r':
-                    _mover.ModeDir(Vector3.right, _tokenSource.Token);
+                    _mover.ModeToDir(Vector3.right, _tokenSource.Token);
 
                     break;
                 case 'l':
-                    _mover.ModeDir(-Vector3.right, _tokenSource.Token);
+                    _mover.ModeToDir(-Vector3.right, _tokenSource.Token);
 
                     break;
             }

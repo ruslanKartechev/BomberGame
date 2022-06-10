@@ -2,31 +2,31 @@
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 namespace BomberGame
 {
     public class PathBuilder
     {
         protected Map _map;
-        protected float _gridSize = 1;
-        protected MapPositionValidator _positionValidator;
-        protected PathFindStrategy _pathStrategy;
-
-        public PathBuilder(Map map, MapPositionValidator positionValidator)
+        protected PathFindStrategy<Vector2> _currentStrat;
+        private CancellationTokenSource _tokenSource;
+        public PathBuilder(Map map)
         {
+            _tokenSource = new CancellationTokenSource();
             _map = map;
-            _gridSize = _map.GetGridSize();
-            _positionValidator = positionValidator;
         }
 
-        public async Task<List<Vector2>> GetPath(Vector2 start, Vector2 end)
+        public async Task<List<Vector2>> GetNormalPath(Vector2 start, Vector2 end)
         {
-            _pathStrategy = new AStartStrategy(_map,_gridSize, _positionValidator);
-            List<Vector2> path = await _pathStrategy.GetPath(start, end);
+            _tokenSource?.Cancel();
+            _tokenSource = new CancellationTokenSource();
+            _currentStrat = new AStartStrategy(_map);
+            List<Vector2> path = _currentStrat.GetPathSync(start, end).Nodes;
             return path;
         }
-        public void Stop()
-        {
-            _pathStrategy?.Stop();
-        }
+
+        
+
+
     }
 }

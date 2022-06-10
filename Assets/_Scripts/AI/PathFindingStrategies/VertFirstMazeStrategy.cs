@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Threading;
 namespace BomberGame
 {
 
 
-    public class VertFirstMazeStrategy : PathFindStrategy
+    public class VertFirstMazeStrategy : PathFindStrategy<Vector2>
     {
         protected List<Vector2> _path = new List<Vector2>();
         protected List<Vector2> _prevSteps = new List<Vector2>();
@@ -20,7 +21,7 @@ namespace BomberGame
             _gridSize = gridSize;
             _positionValidator = positionCheck;
         }
-        public override async Task<List<Vector2>> GetPath(Vector2 start, Vector2 end)
+        public override async Task<WalkPath<Vector2>> GetPathAsync(Vector2 start, Vector2 end, CancellationToken token)
         {
             _prevSteps.Clear();
             _prevSteps.Add(start);
@@ -53,9 +54,43 @@ namespace BomberGame
             }
             else
                 Debug.Log($"<color=red>Ends not match, iterations limit reached: i =={i}</color>");
-            return _path;
+            return new WalkPath<Vector2>(_path);
         }
+        public override WalkPath<Vector2> GetPathSync(Vector2 start, Vector2 end)
+        {
+            _prevSteps.Clear();
+            _prevSteps.Add(start);
+            _path.Clear();
+            _mockCurrent = start;
+            int i = 0;
+            int limit = 25;
+            while (i < limit && _mockCurrent != end)
+            {
+                bool sameVert = (_mockCurrent.y == end.y) ? true : false;
+                bool sameHor = (_mockCurrent.x == end.x) ? true : false;
+                if (!sameHor && !sameVert)
+                {
+                    TryFindDefaultCase(end);
+                }
+                else if (sameHor)
+                {
+                    TryFindHorCase(end);
+                }
+                else if (sameVert)
+                {
+                    TryFindVertCase(end);
+                }
+                i++;
+            }
 
+            if (_path.Count > 1 && end == _path[_path.Count - 1])
+            {
+                Debug.Log("<color=green>Target will be reached</color>");
+            }
+            else
+                Debug.Log($"<color=red>Ends not match, iterations limit reached: i =={i}</color>");
+            return new WalkPath<Vector2>(_path);
+        }
         #region Cases
         protected virtual void TryFindDefaultCase(Vector2 end)
         {
@@ -246,10 +281,6 @@ namespace BomberGame
 
         }
 
-        public override void Stop()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 
 

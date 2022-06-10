@@ -27,7 +27,7 @@ namespace BomberGame
         private PlayerHealableAdaptor _healableAdaptor;
         private PlayerMaxHealthBuffsAdaptor _healthBuffAdaptor;
         // movement
-        private ActorPathMover _pahtMover;
+        private ActorPathMover _pathMover;
         private MovementMapAdaptor _moveMapWrapper;
         private MovementBuffAdaptor _moveBuffAdaptor;
         // bombs
@@ -48,7 +48,6 @@ namespace BomberGame
         private void OnDisable()
         {
             _AIBrains?.Disable();
-            //_AIMovement.Stop();
         }
 
         #region Actor
@@ -88,15 +87,15 @@ namespace BomberGame
         private void InitMovement()
         {
             MapPositionValidator mapPosValidator = new MapPositionValidator(_map);
-            _pahtMover = new ActorPathMover(mapPosValidator, _view, _view, _settings.MovementSettings);
-            _pahtMover.InitStartPosition(SpawnSettings.StartPosition);
-            _moveMapWrapper = new MovementMapAdaptor(_map, this, _pahtMover, SpawnSettings.StartPosition);
+            _pathMover = new ActorPathMover(mapPosValidator, _view, _view, _settings.MovementSettings);
+            _pathMover.InitStartPosition(SpawnSettings.StartPosition);
+            _moveMapWrapper = new MovementMapAdaptor(_map, this, _pathMover, SpawnSettings.StartPosition);
             ISpeedBuffVFX speedVFX = null;
             if (_entityComponents.TryGetValue(typeof(ISpeedBuffVFX), out object effect))
             {
                 speedVFX = (ISpeedBuffVFX)effect;
             }
-            _moveBuffAdaptor = new MovementBuffAdaptor(_pahtMover, speedVFX);
+            _moveBuffAdaptor = new MovementBuffAdaptor(_pathMover, speedVFX);
         }
 
         private void InitHealth()
@@ -132,13 +131,12 @@ namespace BomberGame
             _bombGetter = new BombPoolGetter(_settings.BombInventory, _settings._bombChannel);
             _bombBuffableAdaptor = new BombBuffer();
             _bombingManager = new BombPlacementManager(_bombGetter, _bombBuffableAdaptor, _map, _map, _map, _ID);
-            //_bombInputController = new PlayerAttackController(_settings.AttackChannel, _bombingManager, _mover);
         }
 
         private void InitAI()
         {
-            _AIMovement = new AIMovement(_pahtMover, _map);
-            _AIBrains = new AIBrain(_AIMovement,new AIAttackController(), _map);
+            _AIMovement = new AIMovement(_pathMover, _map);
+            _AIBrains = new AIBrain(_AIMovement,new AIAttackController(_bombingManager, _pathMover), this, _map);
         }
 
         private void InitComponentContainer()

@@ -3,13 +3,13 @@ using UnityEngine;
 using System;
 namespace BomberGame.Bombs
 {
-    public class BombMapCaster<T> : IExplosionCaster<T>
+    public class BombMapScanner<T> : IExplosionCaster<T>
     {
         private IActorsMap<T> _actorMap;
         private IObstacleMap<T> _obstacleMap;
         private float _posError;
 
-        public BombMapCaster(IActorsMap<T> actors, IObstacleMap<T> obstacles, float posError)
+        public BombMapScanner(IActorsMap<T> actors, IObstacleMap<T> obstacles, float posError)
         {
             _actorMap = actors;
             _obstacleMap = obstacles;
@@ -32,7 +32,7 @@ namespace BomberGame.Bombs
             var actorPositions = _actorMap.GetAllActorsPositions();
             foreach(InteractableEntity actor in actorPositions.Keys)
             {
-                float distance = DistanceHelper.GetDistance<T>(actorPositions[actor],position);
+                float distance = DistanceHelper.GetDistance<T>(actorPositions[actor], position);
                 if(distance <= _posError)
                 {
                     result.Add(actor);

@@ -1419,7 +1419,7 @@ MonoBehaviour:
   _actorsToInit:
   - Actor: {fileID: 1122399137}
     Settings:
-      StartPosition: {x: -8, y: -8}
+      StartPosition: {x: 6, y: -8}
   _actorsUI: {fileID: 928352984}
   _actorContainer: {fileID: 11400000, guid: d9b07ddda7c23424c8a00fcac7d75f48, type: 2}
 --- !u!114 &538316962
@@ -1900,6 +1900,7 @@ MonoBehaviour:
       Delay_max: 5
   _buffCardGenerator:
     _randomBuffGen:
+      DebugLog: 0
       ContainerChoiceParams:
       - Callback: {fileID: 11400000, guid: 03e74c4560d6bd1499efbe8416652e7b, type: 2}
         Ratio: 20
@@ -5522,21 +5523,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 279878035990616734, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.00000004371139
-      objectReference: {fileID: 0}
-    - target: {fileID: 279878035990616734, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 279878036001784869, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
       propertyPath: m_Name
       value: AI_4
-      objectReference: {fileID: 0}
-    - target: {fileID: 279878036001784869, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 279878036001784873, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
       propertyPath: m_RootOrder
@@ -5544,7 +5533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 279878036001784873, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 279878036001784873, guid: faf1f6a7c9832564287ed27cfaa00584, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5702,7 +5691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2016422096662645873, guid: 240c04861e383014cbf5b4e7d6d67af9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2016422096662645873, guid: 240c04861e383014cbf5b4e7d6d67af9, type: 3}
       propertyPath: m_LocalPosition.z

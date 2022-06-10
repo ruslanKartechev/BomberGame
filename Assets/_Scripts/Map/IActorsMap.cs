@@ -9,5 +9,6 @@ namespace BomberGame
         void UpdatePosition(InteractableEntity user, T position);
         List<InteractableEntity> GetAllActors();
         Dictionary<InteractableEntity,T> GetAllActorsPositions();
+        T GetActorNodePosition(InteractableEntity user);
     }
 }

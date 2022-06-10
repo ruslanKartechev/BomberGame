@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace BomberGame
 {
-    public class Actor2DMapMover : ActorMoverBase<Vector2>, ITileMover
+    public class Actor2DMapMover : ActorMoverBase<Vector2>, ITileMover<Vector2>
     {
         protected IPositionValidator _positionValidator;
         protected ITransformView2D _transView;
@@ -14,7 +14,8 @@ namespace BomberGame
         protected bool _isMoving = false;
         protected float _currentSpeedModifier = 1;
         protected Vector2 _currentPosition;
-        protected Vector2 _tilePosition;
+        protected Vector2 _tileToPos;
+        protected Vector2 _tileFromPos;
         public float CurrentSpeedModifier { get => _currentSpeedModifier; set => _currentSpeedModifier = value; }
 
         public Actor2DMapMover(IPositionValidator validator, ITransformView2D view, ISpriteView2D spriteView, MoveSettings startSettings)
@@ -25,20 +26,16 @@ namespace BomberGame
             _spriteView = spriteView;
         }
 
-        public Vector3 GetPosition()
-        {
-            return _tilePosition;
-        }
-
         public void InitStartPosition(Vector2 startPosition)
         {
             _currentPosition = startPosition;
-            _tilePosition = startPosition;
-            RaiseOnPositionChange(_currentPosition);
+            _tileToPos = startPosition;
+            _tileFromPos = startPosition;
+            //RaiseOnPositionChange(_currentPosition);
             _transView?.UpdatePosition(_currentPosition);
         }
 
-        public async override Task ModeDir(Vector2 dir, CancellationToken token)
+        public async override Task ModeToDir(Vector2 dir, CancellationToken token)
         {
             if(_isMoving == false)
             {
@@ -49,18 +46,18 @@ namespace BomberGame
                 {
                     Vector2 moveVector = _settings.GridSize * dir;
                     _spriteView.SetViewDirection(_currentPosition, destination);
-                    await MoveToNode(time, _currentPosition + moveVector, token);
+                    await MoveToPos(time, _currentPosition + moveVector, token);
                 }
             }
         }
 
-        protected async Task MoveToNode(float time, Vector2 end, CancellationToken token)
+        protected async Task MoveToPos(float time, Vector2 end, CancellationToken token)
         {
-            if(_currentPosition != _tilePosition)
+            if(_currentPosition != _tileToPos)
             {
-                float t = GetCorrectedTime(time, (_currentPosition - _tilePosition).magnitude, _settings.GridSize);
-                _spriteView.SetViewDirection(_currentPosition, _tilePosition) ;
-                await (Moving(t, _tilePosition, token));
+                float t = GetCorrectedTime(time, (_currentPosition - _tileToPos).magnitude, _settings.GridSize);
+                _spriteView.SetViewDirection(_currentPosition, _tileToPos) ;
+                await (Moving(t, _tileToPos, token));
             }
             float tt = GetCorrectedTime(time, (_currentPosition - end).magnitude, _settings.GridSize);
             if(tt > 0)
@@ -70,36 +67,58 @@ namespace BomberGame
             }
         }
 
-        private async Task Moving(float time, Vector2 end, CancellationToken token)
+        private async Task Moving(float time, Vector2 endpos, CancellationToken token)
         {
             _isMoving = true;
             float elapsed = 0f;
-            Vector2 start = _currentPosition;
-            _tilePosition = end;
+            Vector2 startpos = _currentPosition;
+            _tileToPos = endpos;
             while (elapsed <= time)
             {
                 token.ThrowIfCancellationRequested();
-                _currentPosition = Vector3.Lerp(start, end, elapsed / time);
-                _transView.UpdatePosition(_currentPosition);
+                SetPosition(Vector2.Lerp(startpos, endpos, elapsed / time));
                 elapsed += Time.deltaTime;
-                RaiseOnPositionChange(_currentPosition);
                 await Task.Yield();
             }
             token.ThrowIfCancellationRequested();
-            _currentPosition = end;
+            ConfirmEndPos(endpos);
+        }
+        
+        private void SetPosition(Vector2 position)
+        {
+            _currentPosition = position;
+            RaiseOnPositionChange(position);
             _transView.UpdatePosition(_currentPosition);
-            RaiseOnPositionChange(end);
+        }
+
+        private void ConfirmEndPos(Vector2 endpos)
+        {
+            _currentPosition = endpos;
+            _tileFromPos = endpos;
+            _transView.UpdatePosition(_currentPosition);
+            RaiseOnPositionChange(endpos);
             _isMoving = false;
         }
 
-      
         private float GetCorrectedTime(float refTime, float moveDistance, float refDistance)
         {
             float correctedTime = refTime * moveDistance / refDistance;
             return correctedTime;
         }
 
- 
+        public Vector2 RealTimePosition()
+        {
+            return _currentPosition;
+        }
 
+        public Vector2 ToPosition()
+        {
+            return _tileToPos;
+        }
+
+        public Vector2 FromPosition()
+        {
+            return _tileFromPos;
+        }
     }
 }

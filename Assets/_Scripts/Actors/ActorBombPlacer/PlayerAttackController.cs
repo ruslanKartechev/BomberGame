@@ -6,8 +6,9 @@ namespace BomberGame
     {
         private InputAttackChannelSO _channel;
         private IBombPlacer _placer;
-        private ITileMover _mover;
-        public PlayerAttackController(InputAttackChannelSO _attackChannel, IBombPlacer placer, ITileMover mover)
+        private ITileMover<Vector2> _mover;
+
+        public PlayerAttackController(InputAttackChannelSO _attackChannel, IBombPlacer placer, ITileMover<Vector2> mover)
         {
             _channel = _attackChannel;
             _placer = placer;
@@ -26,7 +27,7 @@ namespace BomberGame
 
         public void Attack()
         {
-            Vector3 position = _mover.GetPosition();
+            Vector3 position = _mover.FromPosition();
             _placer.PlaceBomb(position);
         }
     }

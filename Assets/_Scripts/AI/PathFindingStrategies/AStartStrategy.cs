@@ -4,56 +4,58 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace BomberGame
 {
-    public class AStartStrategy : PathFindStrategy
+    public class AStartStrategy : PathFindStrategy<Vector2>
     {
         protected float _gridSize;
-        protected Map _map;
+        protected INodeMap<Vector2> _map;
         protected MapBorders _borders;
-        protected IPositionValidator _positionValidator;
         protected List<Vector2> _path = new List<Vector2>();
-        private CancellationTokenSource _pathFindToken;
-        public AStartStrategy(Map map,float gridSize, IPositionValidator positionValid)
+        public AStartStrategy(INodeMap<Vector2> map)
         {
-            _gridSize = gridSize;
-            _positionValidator = positionValid;
             _map = map;
+            _gridSize = _map.GetGridSize();
         }
 
-        public override async Task<List<Vector2>> GetPath(Vector2 start, Vector2 end)
+        public override WalkPath<Vector2> GetPathSync(Vector2 start, Vector2 end)
         {
-            _pathFindToken?.Cancel();
-            _pathFindToken = new CancellationTokenSource();
-            await GetAstar(start, end, _pathFindToken.Token);
-            //Debug.Log($"<color=yellow> Mypath count: {_path.Count} </color>");
-            return _path;
-        }
-
-        public override void Stop()
-        {
-            _pathFindToken?.Cancel();
-        }
-
-        public async Task GetAstar(Vector2 start, Vector2 end, CancellationToken token)
-        {
-            int i = 0;
-            int i_max = 100;
+            int it = 0;
+            int it_max = 100;
             AStarPathFinder<Vector2> algorithm = new AStarPathFinder<Vector2>();
             algorithm.HeuristicCost = ManhattanCost;
             algorithm.NodeTravelCost = EuclideanCost;
-            //algorithm.onAddToClosedList = OnAddToClosedList;
             algorithm.Initialize(_map.GetNodeAt(start), _map.GetNodeAt(end));
-            while (i < i_max && token.IsCancellationRequested == false)
+            while (it < it_max)
             {
                 algorithm.Step();
-                i++;
+                it++;
+                if (algorithm.Status == PathFinderStatus.SUCCESS)
+                {
+                    _path = BuildPathFromReversed(algorithm.GetReversedPath());
+                    return new WalkPath<Vector2>(_path);
+                }
+            }
+            throw new System.Exception($"Cannot build A* path in {it_max} iterations");
+        }
+
+        public override async Task<WalkPath<Vector2>> GetPathAsync(Vector2 start, Vector2 end, CancellationToken token)
+        {
+            int it = 0;
+            int it_max = 100;
+            AStarPathFinder<Vector2> algorithm = new AStarPathFinder<Vector2>();
+            algorithm.HeuristicCost = ManhattanCost;
+            algorithm.NodeTravelCost = EuclideanCost;
+            algorithm.Initialize(_map.GetNodeAt(start), _map.GetNodeAt(end));
+            while (it < it_max && token.IsCancellationRequested == false)
+            {
+                algorithm.Step();
+                it++;
                 if(algorithm.Status == PathFinderStatus.SUCCESS)
                 {
-                    //Debug.Log("SUCCESS");
                     _path = BuildPathFromReversed(algorithm.GetReversedPath());
-                    break;
+                    return new WalkPath<Vector2>(_path);
                 }
-                //await Task.Delay((int)(0.1f * 1000));
             }
+            throw new System.Exception($"Cannot build A* path in {it_max} iterations");
         }
 
         private List<Vector2> BuildPathFromReversed(List<Node<Vector2>> nodes)

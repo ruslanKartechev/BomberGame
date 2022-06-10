@@ -7,6 +7,7 @@ namespace BomberGame
 {
     public class ActorPathMover : Actor2DMapMover
     {
+        public event Action OnStep;
         public ActorPathMover(IPositionValidator validator, ITransformView2D transView, ISpriteView2D dirView,  MoveSettings startSettings) 
             : base(validator, transView, dirView, startSettings)
         {
@@ -32,7 +33,8 @@ namespace BomberGame
         public async Task MoveTo(Vector2 position, CancellationToken token)
         {
             float time = _settings.SnapTime / _currentSpeedModifier;
-            await MoveToNode(time, position, token);
+            await MoveToPos(time, position, token);
+            OnStep?.Invoke();
             token.ThrowIfCancellationRequested();
             _currentPosition = position;
         }

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 namespace BomberGame
 {
-    public interface ITileMover
+    public interface ITileMover<T>
     {
-        Vector3 GetPosition();
+        T RealTimePosition();
+        T ToPosition();
+        T FromPosition();
     }
 }

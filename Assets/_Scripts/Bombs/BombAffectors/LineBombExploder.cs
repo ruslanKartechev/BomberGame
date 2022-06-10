@@ -34,7 +34,6 @@ namespace BomberGame.Bombs
         {
             List<ExplosionTarget<Vector2>> obstacles = GetObstacles(_centerPosition, dir, _gridSize, _explosionLength, _piercing);
             int cellDepth = _explosionLength - obstacles.Count;
-            float distance = _gridSize * cellDepth;
             List<ExplosionTarget<Vector2>> actors = GetActors(_centerPosition, dir, _gridSize, cellDepth);
             obstacles.AddRange(actors);
             return obstacles;

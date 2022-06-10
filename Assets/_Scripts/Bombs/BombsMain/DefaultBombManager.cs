@@ -33,7 +33,7 @@ namespace BomberGame.Bombs
             _actorMap = actorMap;
             _damager.DealerID = placerID;
             _exploder = new LineBombExploder2D();
-            _exploder.Init(_settings, _explosionSettings, new BombMapCaster<Vector2>(_actorMap, _obstacleMap,1), _myPosition);
+            _exploder.Init(_settings, _explosionSettings, new BombMapScanner<Vector2>(_actorMap, _obstacleMap, 0.4f), _myPosition);
             _exploder.ExplosionEffect = _explosionEffect;
             _exploder.EffectDuration = _explosionSettings.Duration;
             _lineExplosionAffector = new ExplosionResultAffector<Vector2>(_damager, _damager);

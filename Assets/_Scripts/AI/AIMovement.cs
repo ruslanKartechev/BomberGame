@@ -11,10 +11,12 @@ namespace BomberGame
         public Vector2 FinalPosition;
     }
 
-    public class AIMovement : ITileMover
+    public class AIMovement
     {
-        public Vector2 CurrentPosition { get => _pathMover.GetPosition(); }
-        public event Action<MoveResult> OnPositionReached;
+        public Vector2 CurrentPosition { get => _pathMover.ToPosition(); }
+        public event Action<MoveResult> OnPathEnd;
+        public event Action OnGridMove;
+
 
         private ActorPathMover _pathMover;
         private PathBuilder _pathBuilder;
@@ -23,24 +25,25 @@ namespace BomberGame
         public AIMovement(ActorPathMover pathMover, Map map)
         {
             _pathMover = pathMover;
+            _pathMover.OnStep += OnStep;
             _map = map;
-            _pathBuilder = new PathBuilder(_map, new MapPositionValidator(_map));
+            _pathBuilder = new PathBuilder(_map);
         }
 
-        public async Task Move(Vector2 targetPosition, CancellationToken token)
+        public async Task MoveToPosition(Vector2 targetPosition, CancellationToken token)
         {
-            List<Vector2> path = await _pathBuilder.GetPath(CurrentPosition,targetPosition);
+            List<Vector2> path = await _pathBuilder.GetNormalPath(CurrentPosition,targetPosition);
             await _pathMover?.MoveOnPath(path, token);
             if (token.IsCancellationRequested)
             {
                 return;
             }
             MoveResult result = new MoveResult();
-            result.FinalPosition = _pathMover.GetPosition();
-            OnPositionReached?.Invoke(result);
+            result.FinalPosition = _pathMover.FromPosition();
+            OnPathEnd?.Invoke(result);
         }
 
-        public async Task Move(List<Vector2> path, CancellationToken token)
+        public async Task MoveOnPath(List<Vector2> path, CancellationToken token)
         {
             await _pathMover?.MoveOnPath(path, token);
             if (token.IsCancellationRequested)
@@ -48,14 +51,15 @@ namespace BomberGame
                 return;
             }
             MoveResult result = new MoveResult();
-            result.FinalPosition = _pathMover.GetPosition();
-            OnPositionReached?.Invoke(result);
+            result.FinalPosition = _pathMover.FromPosition();
+            OnPathEnd?.Invoke(result);
         }
 
-        public Vector3 GetPosition()
+        private void OnStep()
         {
-            return _pathMover.GetPosition();
+            OnGridMove?.Invoke();
         }
+
     }
 
 }
